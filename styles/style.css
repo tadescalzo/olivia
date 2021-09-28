@@ -1,0 +1,200 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+}
+
+:root {
+  --main-white-color: #f4f4f4;
+  --main-text-color: #333;
+}
+
+body {
+  background-color: var(--main-white-color);
+}
+
+.header {
+  width: 100%;
+  height: 50vh;
+  background-color: black;
+  position: relative;
+  overflow: hidden;
+}
+
+.header--background {
+  position: absolute;
+  -webkit-transform: scale(1.5);
+          transform: scale(1.5);
+  top: 0;
+  z-index: 1;
+  -webkit-filter: blur(5px);
+          filter: blur(5px);
+}
+
+.header--nav {
+  width: 100%;
+  height: 8vh;
+  background-color: var(--main-white-color);
+  position: absolute;
+  top: 0%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  text-align: center;
+  color: var(--main-text-color);
+  z-index: 2;
+  box-shadow: 0px 5px 24px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 5px 24px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 5px 24px 0px rgba(0, 0, 0, 0.75);
+}
+
+.header--nav__title {
+  margin-left: 1rem;
+  font-size: 2rem;
+  width: 20%;
+}
+
+.header--nav__links, .header--nav__user {
+  font-size: 1.2rem;
+  width: 20%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.header--nav__links a, .header--nav__user a {
+  text-decoration: none;
+  color: var(--main-text-color);
+  margin: 0rem 2rem;
+  font-weight: 400;
+}
+
+.header--nav a {
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.header--nav a:hover {
+  -webkit-filter: drop-shadow(0px 0px 10px #333);
+          filter: drop-shadow(0px 0px 10px #333);
+}
+
+.header--main {
+  width: 100%;
+  height: 42vh;
+  position: absolute;
+  bottom: 0%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  z-index: 2;
+}
+
+.main {
+  width: 100%;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 2rem 0rem;
+  background-color: var(--main-white-color);
+}
+
+.main--filters {
+  width: 20%;
+  height: 100vh;
+  border-right: 2px solid var(--main-text-color);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main--filters ul {
+  list-style: none;
+}
+
+.main--items {
+  width: 80%;
+  height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  margin-bottom: 10rem;
+}
+
+.main--items__title {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.main--items__card {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 20%;
+          flex: 0 0 20%;
+  height: 30vh;
+  margin: 2rem;
+  background-color: red;
+}
+
+.about {
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.35);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  z-index: 3;
+}
+
+.about--modal {
+  width: 60%;
+  height: 50%;
+  background-color: var(--main-white-color);
+}
+/*# sourceMappingURL=style.css.map */
