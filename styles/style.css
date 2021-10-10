@@ -148,7 +148,7 @@ body {
 
 .main--items {
   width: 80%;
-  height: 100vh;
+  min-height: 100vh;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -302,7 +302,7 @@ body {
 
 .footer {
   width: 100%;
-  height: 20vh;
+  min-height: 20vh;
   background-color: var(--main-text-color);
   color: var(--main-white-color);
   display: -webkit-box;
@@ -345,5 +345,91 @@ body {
 .footer--links a {
   color: var(--main-white-color);
   text-decoration: none;
+}
+
+@media (max-width: 600px) {
+  .header {
+    height: 30vh;
+  }
+  .header--main {
+    height: 22vh;
+    position: absolute;
+    bottom: 0;
+  }
+  .header--nav__links a {
+    display: none;
+  }
+  .header--nav__user {
+    width: 35%;
+  }
+  .header--nav__user a {
+    margin-left: 1rem;
+  }
+  .main {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .main--filters {
+    border: none;
+    height: -webkit-fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    width: 80%;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.541);
+  }
+  .main--filters__interactive {
+    display: none;
+  }
+  .main--items {
+    margin: 0;
+    width: 100%;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .main--items__card {
+    width: 100%;
+    margin: 1rem;
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 70%;
+            flex: 0 0 70%;
+  }
+  .footer {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .footer--info {
+    width: 80%;
+    border-bottom: 2px solid #f4f4f475;
+  }
+  .footer--links {
+    width: 80%;
+    margin-bottom: 2rem;
+  }
 }
 /*# sourceMappingURL=style.css.map */
