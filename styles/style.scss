@@ -10,6 +10,7 @@
   --lighter-grey: rgb(228, 228, 228);
   --main-white-color: #f4f4f4;
   --main-text-color: #333;
+  --sec-text-color: #232323;
 }
 
 body {
@@ -241,6 +242,7 @@ body {
       position: relative;
       .forgotPw {
         font-size: 0.9rem;
+        font-weight: 700;
         position: absolute;
         top: 59%;
         right: 25%;
@@ -249,7 +251,7 @@ body {
           color: var(--darker-grey);
         }
         &:hover {
-          text-decoration: none;
+          color: var(--sec-text-color);
         }
       }
       .iconInput {
@@ -298,17 +300,18 @@ body {
         cursor: pointer;
         &:hover {
           background: var(--darker-grey);
-          border: 2px solid var(--main-white-color);
+          border: 2px solid var(--sec-text-color);
           color: var(--main-white-color);
         }
       }
       #regBtn {
         transition: 0.5s;
+        font-weight: 700;
         &:visited {
           color: var(--darker-grey);
         }
         &:hover {
-          color: var(--main-white-color);
+          color: var(--sec-text-color);
         }
       }
     }
