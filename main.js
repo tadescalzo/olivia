@@ -1,6 +1,8 @@
 let aboutModal = document.querySelector(".about");
 let modalClose = document.querySelector(".about--modal__close");
 let aboutLink = document.querySelector("#aboutLink");
+let userBtn = document.querySelector("#userBtn");
+
 modalClose.addEventListener("click", (e) => {
   e.preventDefault();
   aboutModal.style.opacity = 0;

@@ -22,7 +22,7 @@
             <a id="aboutLink" href="#">Sobre nosotros</a>
         </div>
         <div class="header--nav__user">
-            <a href="#"><i class="fas fa-user"></i></a>
+            <a href="#"><i class="fas fa-user" id="userBtn"></i></a>
             <a href="#"><i class="fas fa-shopping-cart"></i></a>
         </div>
     </nav>
@@ -102,7 +102,22 @@
 </section>
 <section class="login">
     <div class="login--modal">
-        
+        <form class="login--modal__form" action="submit">
+            <span>Bienvenido</span>
+            <div class="iconInput">
+              <i class="far fa-envelope"></i>
+              <input class="textInput" type="text" placeholder="Mail" id="usrInput">
+            </div>
+            <div class="iconInput">
+              <i class="fas fa-key"></i>
+              <input class="textInput" type="password" placeholder="Contraseña" id="pswInput">
+            </div>
+            <input type="button" value='Log in' id="logBtn">
+            <span class="regText">¿No tenes cuenta? <a href="" id="regBtn">Registrarse</a></span>
+            <hr>
+            <span class="regText">O ingresa con:</span>
+            <a href="" class="forgotPw">¿Olvidaste tu contraseña?</a>
+          </form>
     </div>
 </section>
 <footer class="footer">
