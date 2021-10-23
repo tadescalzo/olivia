@@ -22,7 +22,7 @@
             <a id="aboutLink" href="#">Sobre nosotros</a>
         </div>
         <div class="header--nav__user">
-            <a href="#"><i class="fas fa-user" id="userBtn"></i></a>
+            <a href="#" id="userBtn"><i class="fas fa-user"></i></a>
             <a href="#"><i class="fas fa-shopping-cart"></i></a>
         </div>
     </nav>
@@ -86,6 +86,14 @@
             <span>Ver mas...</span>
         </div>
     </div>
+    <div class="main--selected">
+        <div class="main--selected__modal">
+            <img class="selectedImg" src="images/about.jpg" alt="">
+            <div class="selectedInfo">
+                
+            </div>
+        </div>
+    </div>
 </main>    
 <section class="about">
     <div class="about--modal">
@@ -102,6 +110,7 @@
 </section>
 <section class="login">
     <div class="login--modal">
+        <span class="closeModal">X</span>
         <form class="login--modal__form" action="submit">
             <span>Bienvenido</span>
             <div class="iconInput">
@@ -113,15 +122,14 @@
               <input class="textInput" type="password" placeholder="Contraseña" id="pswInput">
             </div>
             <input type="button" value='Log in' id="logBtn">
+            <div class="formLinks">
+                <a href="" class="forgotPw">¿Olvidaste tu contraseña?</a>
             <span class="regText">¿No tenes cuenta? <a href="" id="regBtn">Registrarse</a></span>
             <hr>
             <span class="regText">O ingresa con:</span>
             <div class="formSocial">
                 <i class="fab fa-google"></i>
-                <div id="fb-root"></div>
-                <div class="fb-login-button" data-width="" data-size="medium" data-button-type="login_with" data-layout="default" data-auto-logout-link="true" data-use-continue-as="true"></div>
             </div>
-            <a href="" class="forgotPw">¿Olvidaste tu contraseña?</a>
           </form>
     </div>
 </section>
