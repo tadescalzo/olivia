@@ -1,9 +1,12 @@
-let aboutModal = document.querySelector(".about");
-let modalClose = document.querySelector(".about--modal__close");
-let closeModal = document.querySelector(".closeModal");
+let closeAbout = document.querySelector(".about--modal__close");
+let closeLogin = document.querySelector(".closeLogin");
+let closeItem = document.querySelector(".selectedClose");
 let loginModal = document.querySelector(".login");
+let aboutModal = document.querySelector(".about");
+let itemModal = document.querySelector(".main--selected");
 let userBtn = document.querySelector("#userBtn");
-let aboutLink = document.querySelector("#aboutLink");
+let aboutBtn = document.querySelector("#aboutBtn");
+let itemBtns = document.getElementsByClassName("itemBtn");
 
 /*FIREBASE*/
 const firebaseConfig = {
@@ -16,14 +19,14 @@ const firebaseConfig = {
   measurementId: "G-M1ZD8N9R47",
 };
 
-modalClose.addEventListener("click", (e) => {
+closeAbout.addEventListener("click", (e) => {
   e.preventDefault();
   aboutModal.style.opacity = 0;
   setTimeout(function () {
     aboutModal.style.display = "none";
   }, 500);
 });
-aboutLink.addEventListener("click", (e) => {
+aboutBtn.addEventListener("click", (e) => {
   e.preventDefault();
   aboutModal.style.display = "flex";
   setTimeout(function () {
@@ -31,6 +34,13 @@ aboutLink.addEventListener("click", (e) => {
   }, 500);
 });
 
+closeLogin.addEventListener("click", (e) => {
+  e.preventDefault();
+  loginModal.style.opacity = 0;
+  setTimeout(function () {
+    loginModal.style.display = "none";
+  }, 500);
+});
 userBtn.addEventListener("click", (e) => {
   e.preventDefault();
   loginModal.style.display = "flex";
@@ -39,10 +49,20 @@ userBtn.addEventListener("click", (e) => {
   }, 500);
 });
 
-closeModal.addEventListener("click", (e) => {
+closeItem.addEventListener("click", (e) => {
   e.preventDefault();
-  loginModal.style.opacity = 0;
+  itemModal.style.opacity = 0;
   setTimeout(function () {
-    loginModal.style.display = "none";
+    itemModal.style.display = "none";
   }, 500);
 });
+for (el of itemBtns) {
+  el.addEventListener("click", (e) => {
+    e.preventDefault();
+    console.log("cosa");
+    itemModal.style.display = "flex";
+    setTimeout(function () {
+      itemModal.style.opacity = 1;
+    }, 500);
+  });
+}

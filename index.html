@@ -19,7 +19,7 @@
         <h2 class="header--nav__title">Olivia</h2>
         <div class="header--nav__links">
             <a href="#main">Tienda</a>
-            <a id="aboutLink" href="#">Sobre nosotros</a>
+            <a id="aboutBtn" href="#">Sobre nosotros</a>
         </div>
         <div class="header--nav__user">
             <a href="#" id="userBtn"><i class="fas fa-user"></i></a>
@@ -59,38 +59,48 @@
             <img class="cardImg" src="images/about.jpg" alt="prueba">
             <h2>Item</h2>
             <h3>$xxxx</h3>
-            <span>Ver mas...</span>
+            <span class="itemBtn">Ver mas...</span>
         </div>
         <div class="main--items__card">
             <img class="cardImg" src="images/about.jpg" alt="prueba">
             <h2>Item</h2>
             <h3>$xxxx</h3>
-            <span>Ver mas...</span>
+            <span class="itemBtn">Ver mas...</span>
         </div>
         <div class="main--items__card">
             <img class="cardImg" src="images/about.jpg" alt="prueba">
             <h2>Item</h2>
             <h3>$xxxx</h3>
-            <span>Ver mas...</span>
+            <span class="itemBtn">Ver mas...</span>
         </div>
         <div class="main--items__card">
             <img class="cardImg" src="images/about.jpg" alt="prueba">
             <h2>Item</h2>
             <h3>$xxxx</h3>
-            <span>Ver mas...</span>
+            <span class="itemBtn">Ver mas...</span>
         </div>
         <div class="main--items__card">
             <img class="cardImg" src="images/about.jpg" alt="prueba">
             <h2>Item</h2>
             <h3>$xxxx</h3>
-            <span>Ver mas...</span>
+            <span class="itemBtn">Ver mas...</span>
         </div>
     </div>
     <div class="main--selected">
         <div class="main--selected__modal">
+            <span class="selectedClose">X</span>
             <img class="selectedImg" src="images/about.jpg" alt="">
             <div class="selectedInfo">
-                
+                <h1 class="selectedTitle">Sweater</h1>
+                <h2 class="selectedPrice">$1000</h2>
+                <span class="selectedDesc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo dolorum ducimus perspiciatis. Quae optio voluptates nisi consequuntur? Explicabo veritatis cum quia quasi corrupti, numquam corporis in quas molestias illo deleniti!</span> 
+                <div class="selectedSizes">
+                    <div class="selectedSizesInd">S</div>
+                    <div class="selectedSizesInd">M</div>
+                    <div class="selectedSizesInd">L</div>
+                    <div class="selectedSizesInd">XL</div>
+                </div>
+                <input class="selectedBuy" type="button" value="Añadir al carrito">   
             </div>
         </div>
     </div>
@@ -110,7 +120,7 @@
 </section>
 <section class="login">
     <div class="login--modal">
-        <span class="closeModal">X</span>
+        <span class="closeLogin">X</span>
         <form class="login--modal__form" action="submit">
             <span>Bienvenido</span>
             <div class="iconInput">
