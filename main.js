@@ -7,6 +7,10 @@ let itemModal = document.querySelector(".main--selected");
 let userBtn = document.querySelector("#userBtn");
 let aboutBtn = document.querySelector("#aboutBtn");
 let itemBtns = document.getElementsByClassName("itemBtn");
+let sizesBtns = document.getElementsByClassName("selectedSizesInd");
+let buyBtn = document.querySelector(".selectedBuy");
+let usrInput = document.getElementById("usrInput");
+let pswInput = document.getElementById("pswInput");
 
 /*FIREBASE*/
 const firebaseConfig = {
@@ -19,6 +23,7 @@ const firebaseConfig = {
   measurementId: "G-M1ZD8N9R47",
 };
 
+/*INTERACTUAR ABOUT*/
 closeAbout.addEventListener("click", (e) => {
   e.preventDefault();
   aboutModal.style.opacity = 0;
@@ -33,12 +38,14 @@ aboutBtn.addEventListener("click", (e) => {
     aboutModal.style.opacity = 1;
   }, 500);
 });
-
+/*INTERACTUAR LOGIN*/
 closeLogin.addEventListener("click", (e) => {
   e.preventDefault();
   loginModal.style.opacity = 0;
   setTimeout(function () {
     loginModal.style.display = "none";
+    usrInput.value = "";
+    pswInput.value = "";
   }, 500);
 });
 userBtn.addEventListener("click", (e) => {
@@ -48,12 +55,15 @@ userBtn.addEventListener("click", (e) => {
     loginModal.style.opacity = 1;
   }, 500);
 });
-
+/*INTERACTUAR MODAL ITEM*/
 closeItem.addEventListener("click", (e) => {
   e.preventDefault();
   itemModal.style.opacity = 0;
   setTimeout(function () {
     itemModal.style.display = "none";
+    for (el of sizesBtns) {
+      el.checked = false;
+    }
   }, 500);
 });
 for (el of itemBtns) {
@@ -66,3 +76,29 @@ for (el of itemBtns) {
     }, 500);
   });
 }
+/*SOLO UN CHECKBOX EN TAMAÑOS*/
+function selectOne(id) {
+  for (var i = 1; i <= 4; i++) {
+    document.getElementById("check" + i).checked = false;
+  }
+  document.getElementById(id).checked = true;
+}
+
+/*INTERACTUAR BOTON COMPRAR*/
+buyBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  itemModal.style.opacity = 0;
+  setTimeout(function () {
+    itemModal.style.display = "none";
+    for (el of sizesBtns) {
+      el.checked = false;
+    }
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Agregado al carrito!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }, 500);
+});

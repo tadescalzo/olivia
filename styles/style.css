@@ -300,7 +300,25 @@ body {
           justify-content: space-evenly;
 }
 
-.main--selected__modal .selectedInfo .selectedSizes .selectedSizesInd {
+.main--selected__modal .selectedInfo .selectedSizes .sizeSize {
+  width: 3rem;
+  height: 3rem;
+  position: relative;
+}
+
+.main--selected__modal .selectedInfo .selectedSizes .sizeSize .sizeLabel {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.main--selected__modal .selectedInfo .selectedSizes .sizeSize .selectedSizesInd {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
   width: 3rem;
   height: 3rem;
   border: 1px solid var(--darker-grey);
@@ -318,7 +336,7 @@ body {
   transition: 0.5s;
 }
 
-.main--selected__modal .selectedInfo .selectedSizes .selectedSizesInd:hover {
+.main--selected__modal .selectedInfo .selectedSizes .sizeSize .selectedSizesInd:active, .main--selected__modal .selectedInfo .selectedSizes .sizeSize .selectedSizesInd:checked:active, .main--selected__modal .selectedInfo .selectedSizes .sizeSize .selectedSizesInd:checked {
   background: var(--darker-grey);
   border: 2px solid var(--sec-text-color);
   color: var(--main-white-color);
@@ -744,6 +762,37 @@ body {
     -webkit-box-flex: 0;
         -ms-flex: 0 0 70%;
             flex: 0 0 70%;
+  }
+  .main--selected__modal {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    width: 90%;
+    height: 90vh;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: space-evenly;
+        -ms-flex-pack: space-evenly;
+            justify-content: space-evenly;
+  }
+  .main--selected__modal .selectedImg {
+    width: 63%;
+    height: 40%;
+  }
+  .main--selected__modal .selectedInfo {
+    width: 100%;
+    height: 55%;
+  }
+  .main--selected__modal .selectedInfo .selectedDesc {
+    width: 90%;
+  }
+  .login--modal {
+    width: 90%;
+  }
+  .login--modal .regText {
+    text-align: center;
   }
   .footer {
     -webkit-box-orient: vertical;

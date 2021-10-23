@@ -95,10 +95,11 @@
                 <h2 class="selectedPrice">$1000</h2>
                 <span class="selectedDesc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo dolorum ducimus perspiciatis. Quae optio voluptates nisi consequuntur? Explicabo veritatis cum quia quasi corrupti, numquam corporis in quas molestias illo deleniti!</span> 
                 <div class="selectedSizes">
-                    <div class="selectedSizesInd">S</div>
-                    <div class="selectedSizesInd">M</div>
-                    <div class="selectedSizesInd">L</div>
-                    <div class="selectedSizesInd">XL</div>
+                    <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check1" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeS">S</label></div>
+                    <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check2" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeM">M</label></div>
+                    <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check3" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeL">L</label></div>
+                    <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check4" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeXL">XL</label></div>
+                    
                 </div>
                 <input class="selectedBuy" type="button" value="Añadir al carrito">   
             </div>
@@ -125,11 +126,11 @@
             <span>Bienvenido</span>
             <div class="iconInput">
               <i class="far fa-envelope"></i>
-              <input class="textInput" type="text" placeholder="Mail" id="usrInput">
+              <input class="textInput" autocomplete="off" type="text" placeholder="Mail" id="usrInput">
             </div>
             <div class="iconInput">
               <i class="fas fa-key"></i>
-              <input class="textInput" type="password" placeholder="Contraseña" id="pswInput">
+              <input class="textInput" autocomplete="off" type="password" placeholder="Contraseña" id="pswInput">
             </div>
             <input type="button" value='Log in' id="logBtn">
             <div class="formLinks">
@@ -158,6 +159,7 @@
     </div>
 </footer>
 <script src="main.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://kit.fontawesome.com/6d0905dba6.js" crossorigin="anonymous"></script>    
 <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v12.0&appId=4364525773675715&autoLogAppEvents=1" nonce="QqYIYPce"></script>
 </body>

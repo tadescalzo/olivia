@@ -203,19 +203,34 @@ body {
           display: flex;
           align-items: center;
           justify-content: space-evenly;
-          .selectedSizesInd {
+          .sizeSize {
             width: 3rem;
             height: 3rem;
-            border: 1px solid var(--darker-grey);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: 0.5s;
-            &:hover {
-              background: var(--darker-grey);
-              border: 2px solid var(--sec-text-color);
-              color: var(--main-white-color);
+            position: relative;
+            .sizeLabel {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+              pointer-events: none;
+            }
+            .selectedSizesInd {
+              appearance: none;
+              width: 3rem;
+              height: 3rem;
+              border: 1px solid var(--darker-grey);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              cursor: pointer;
+              transition: 0.5s;
+              &:active,
+              &:checked:active,
+              &:checked {
+                background: var(--darker-grey);
+                border: 2px solid var(--sec-text-color);
+                color: var(--main-white-color);
+              }
             }
           }
         }
@@ -517,6 +532,34 @@ body {
         width: 100%;
         margin: 1rem;
         flex: 0 0 70%;
+      }
+    }
+    &--selected {
+      &__modal {
+        flex-direction: column;
+        width: 90%;
+        height: 90vh;
+        align-items: center;
+        justify-content: space-evenly;
+        .selectedImg {
+          width: 63%;
+          height: 40%;
+        }
+        .selectedInfo {
+          width: 100%;
+          height: 55%;
+          .selectedDesc {
+            width: 90%;
+          }
+        }
+      }
+    }
+  }
+  .login {
+    &--modal {
+      width: 90%;
+      .regText {
+        text-align: center;
       }
     }
   }
