@@ -1,89 +1,168 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Olivia</title>
+    <!-- Import de fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/9.1.1/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/9.1.1/firebase-auth.js"></script>
-    <script defer src="/__/firebase/9.1.1/firebase-database.js"></script>
-    <script defer src="/__/firebase/9.1.1/firebase-firestore.js"></script>
-    <script defer src="/__/firebase/9.1.1/firebase-functions.js"></script>
-    <script defer src="/__/firebase/9.1.1/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/9.1.1/firebase-storage.js"></script>
-    <script defer src="/__/firebase/9.1.1/firebase-analytics.js"></script>
-    <script defer src="/__/firebase/9.1.1/firebase-remote-config.js"></script>
-    <script defer src="/__/firebase/9.1.1/firebase-performance.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
-
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+    <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+<header class="header">
+    <svg class="header--background" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" viewBox="0 0 1920 1080"><rect width="1920" height="1080" fill="#878787"></rect><g transform="matrix(0.9959292143521045,0.5749999999999998,-0.5749999999999998,0.9959292143521045,314.3592972816298,-542.9289646711111)"><path d="M0,-1080C1.3217940841244722,-976.8173785057176,-8.551833682317397,-623.8825740721603,7.930764504746833,-460.90427103430534C24.413362691811063,-297.92596799645037,92.86683622794907,-266.5350072117999,98.89558912238539,-102.13018177287046C104.92434201682171,62.274643666059006,64.50756325285384,310.6289258589918,44.1032818713648,525.5246815992714C23.69900048987576,740.420437339551,-18.860572672646594,1003.6944654543723,-23.530099166548837,1187.2443526688073C-28.19962566045108,1370.7942398832424,12.164439713526528,1464.698063664016,16.086122907951335,1626.8240048858815C20.00780610237614,1788.949946107747,2.6810204846585557,2071.137334147647,0,2160L 1920 2160 L 1920 -1080 Z" fill="url(&quot;#SvgjsLinearGradient1150&quot;)"></path><path d="M640,-1080C640.3942573498782,-976.6515388541455,652.4456269567461,-630.9161293345518,642.365544099269,-459.909233124873C632.2854612417918,-288.90233691519427,562.4306522923214,-201.83817204586015,579.519502855137,-53.958622741927456C596.6083534179527,93.92092656200523,738.5639994145597,219.98623854408416,744.8986474761632,427.3680626987232C751.2332955377667,634.7498868533622,629.8432826612016,993.6690107769238,617.5273912247583,1190.3323221859066C605.211499788315,1386.9956335948893,667.2578640616301,1445.7366515169379,671.0032988575038,1607.34793115262C674.7487336533774,1768.9592107883022,645.1672164762506,2067.89132185877,640,2160L 1920 2160 L 1920 -1080 Z" fill="url(&quot;#SvgjsLinearGradient1151&quot;)"></path><path d="M1280,-1080C1268.2145735159424,-1021.1275075922546,1197.3820385882996,-882.3974769804171,1209.2874410956542,-726.7650455535274C1221.192843603009,-571.1326141266378,1339.7695767132468,-308.934782984401,1351.4324150441275,-146.20541143866245C1363.0952533750083,16.523960107076107,1308.1429818724077,87.68362091681564,1279.264471080939,249.61118372090385C1250.3859602894704,411.53874652499206,1176.7698709595318,677.0570220005175,1178.161350295316,825.3599653858669C1179.5528296311002,973.6629087712163,1271.8898834441782,993.461830163627,1287.6133470956447,1139.4288440330001C1303.3368107471113,1285.3958579023733,1273.7710233867224,1531.0668559409387,1272.502132204115,1701.1620486021054C1271.2332410215076,1871.2572412632721,1278.7503553673525,2083.527008100351,1280,2160L 1920 2160 L 1920 -1080 Z" fill="url(&quot;#SvgjsLinearGradient1152&quot;)"></path></g><defs><linearGradient x1="0.1" y1="0" x2="0" y2="1" id="SvgjsLinearGradient1150"><stop stop-color="#878787" offset="0"></stop><stop stop-color="#878787" offset="0"></stop></linearGradient><linearGradient x1="0.1" y1="0" x2="0" y2="1" id="SvgjsLinearGradient1151"><stop stop-color="#afafaf" offset="0"></stop><stop stop-color="#afafaf" offset="0.3333333333333333"></stop></linearGradient><linearGradient x1="0.1" y1="0" x2="0" y2="1" id="SvgjsLinearGradient1152"><stop stop-color="#d7d7d7" offset="0"></stop><stop stop-color="#d7d7d7" offset="0.6666666666666666"></stop></linearGradient></defs></svg>
+    <nav class="header--nav">
+        <h2 class="header--nav__title">Olivia</h2>
+        <div class="header--nav__links">
+            <a href="#main">Tienda</a>
+            <a id="aboutBtn" href="#">Sobre nosotros</a>
+        </div>
+        <div class="header--nav__user">
+            <a href="#" id="userBtn"><i class="fas fa-user"></i></a>
+            <a href="#"><i class="fas fa-shopping-cart"></i></a>
+        </div>
+    </nav>
+    <div class="header--main">
+        <h2 class="header--main__title">Bienvenido a la tienda Olivia</h2>            
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+</header>
+<main class="main" id="main">
+    <div class="cho-container"></div>
+    <div class="main--filters">
+        <h2 class="main--filters__title">Filtros</h2>
+        <i class="fas fa-bars"></i>
+        <div class="main--filters__interactive">
+            <ul>
+                <li>Filtro 1</li>
+                <li>Filtro 2</li>
+                <li>Filtro 3</li>
+                <li>Filtro 4</li>
+                <li>Filtro 5</li>
+            </ul>
+        </div>
+        <div class="main--filters__interactive">
+            <ul>
+                <li>Filtro 1</li>
+                <li>Filtro 2</li>
+                <li>Filtro 3</li>
+                <li>Filtro 4</li>
+                <li>Filtro 5</li>
+            </ul>
+        </div>
+    </div>
+    <div class="main--items">
+        <h2 class='main--items__title'>Tienda</h2>
+        <div class="main--items__card">
+            <img class="cardImg" src="images/about.jpg" alt="prueba">
+            <h2>Item</h2>
+            <h3>$xxxx</h3>
+            <span class="itemBtn">Ver mas...</span>
+        </div>
+        <div class="main--items__card">
+            <img class="cardImg" src="images/about.jpg" alt="prueba">
+            <h2>Item</h2>
+            <h3>$xxxx</h3>
+            <span class="itemBtn">Ver mas...</span>
+        </div>
+        <div class="main--items__card">
+            <img class="cardImg" src="images/about.jpg" alt="prueba">
+            <h2>Item</h2>
+            <h3>$xxxx</h3>
+            <span class="itemBtn">Ver mas...</span>
+        </div>
+        <div class="main--items__card">
+            <img class="cardImg" src="images/about.jpg" alt="prueba">
+            <h2>Item</h2>
+            <h3>$xxxx</h3>
+            <span class="itemBtn">Ver mas...</span>
+        </div>
+        <div class="main--items__card">
+            <img class="cardImg" src="images/about.jpg" alt="prueba">
+            <h2>Item</h2>
+            <h3>$xxxx</h3>
+            <span class="itemBtn">Ver mas...</span>
+        </div>
+    </div>
+    <div class="main--selected">
+        <div class="main--selected__modal">
+            <span class="selectedClose">X</span>
+            <img class="selectedImg" src="images/about.jpg" alt="">
+            <div class="selectedInfo">
+                <h1 class="selectedTitle">Sweater</h1>
+                <h2 class="selectedPrice">$1000</h2>
+                <span class="selectedDesc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo dolorum ducimus perspiciatis. Quae optio voluptates nisi consequuntur? Explicabo veritatis cum quia quasi corrupti, numquam corporis in quas molestias illo deleniti!</span> 
+                <div class="selectedSizes">
+                    <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check1" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeS">S</label></div>
+                    <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check2" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeM">M</label></div>
+                    <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check3" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeL">L</label></div>
+                    <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check4" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeXL">XL</label></div>
+                    
+                </div>
+                <input class="selectedBuy" type="button" value="Añadir al carrito">   
+            </div>
+        </div>
+    </div>
+</main>    
+<section class="about">
+    <div class="about--modal">
+        <span class="about--modal__close">X</span>
+        <h2 class="about--title">Sobre nosotros</h2>
+        <div class="about--info">
+            <div class="about--info__text">
+                <h2>¿Quienes somos?</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit laborum nam provident, doloribus tenetur eaque cum autem quis fuga iste aliquam temporibus impedit ullam hic sunt itaque, quaerat quae blanditiis? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veniam dicta ex praesentium modi debitis, perferendis obcaecati sed quod ipsa provident quisquam aliquam voluptates eaque voluptatum possimus, voluptate laudantium, maxime tempore.</p>
+            </div>
+            <img src="images/about.jpg" alt="about us">
+        </div>
+    </div>
+</section>
+<section class="login">
+    <div class="login--modal">
+        <span class="closeLogin">X</span>
+        <form class="login--modal__form" action="submit">
+            <span>Bienvenido</span>
+            <div class="iconInput">
+              <i class="far fa-envelope"></i>
+              <input class="textInput" autocomplete="off" type="text" placeholder="Mail" id="usrInput">
+            </div>
+            <div class="iconInput">
+              <i class="fas fa-key"></i>
+              <input class="textInput" autocomplete="off" type="password" placeholder="Contraseña" id="pswInput">
+            </div>
+            <input type="button" value='Log in' id="logBtn">
+            <div class="formLinks">
+                <a href="" class="forgotPw">¿Olvidaste tu contraseña?</a>
+            <span class="regText">¿No tenes cuenta? <a href="" id="regBtn">Registrarse</a></span>
+            <hr>
+            <span class="regText">O ingresa con:</span>
+            <div class="formSocial">
+                <i class="fab fa-google"></i>
+            </div>
+          </form>
+    </div>
+</section>
+<footer class="footer">
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
-        }
-      });
-    </script>
-  </body>
+    <div class="footer--info">
+        <p>Nos pueden encontrar en:</p> 
+        <p><i class="fas fa-search-location"></i>Segurola y Habana 4310</p>
+        <p><i class="far fa-clock"></i>Lunes a Viernes de 9 a las 18hs</p>
+    </div>
+    <div class="footer--links">
+        <ul>
+            <li><a href="#"><i class="fab fa-facebook-f"></i>Facebook</a></li>
+            <li><a href="#"><i class="fab fa-instagram"></i>Instagram</a></li>
+            <li><a href="#"><i class="fab fa-whatsapp"></i>12345678</a></li>
+        </ul>
+    </div>
+</footer>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script src="main.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://kit.fontawesome.com/6d0905dba6.js" crossorigin="anonymous"></script>    
+</body>
 </html>
