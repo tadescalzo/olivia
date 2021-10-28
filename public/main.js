@@ -4,6 +4,8 @@ let closeItem = document.querySelector(".selectedClose");
 let loginModal = document.querySelector(".login");
 let aboutModal = document.querySelector(".about");
 let itemModal = document.querySelector(".main--selected");
+let loginForm = document.querySelector(".login--modal__form");
+let registerForm = document.querySelector(".login--modal__register");
 let userBtn = document.querySelector("#userBtn");
 let aboutBtn = document.querySelector("#aboutBtn");
 let itemBtns = document.getElementsByClassName("itemBtn");
@@ -11,7 +13,10 @@ let sizesBtns = document.getElementsByClassName("selectedSizesInd");
 let buyBtn = document.querySelector(".selectedBuy");
 let usrInput = document.getElementById("usrInput");
 let pswInput = document.getElementById("pswInput");
-
+let usrRegInput = document.getElementById("usrRegInput");
+let pswRegInput = document.getElementById("pswRegInput");
+let pswRegSecInput = document.getElementById("pswRegSecInput");
+let regLink = document.getElementById("regLink");
 /*FIREBASE*/
 const firebaseConfig = {
   apiKey: "AIzaSyDAVV4ueZcAmwHXAimaDlRwp-0DN2ETSio",
@@ -43,9 +48,16 @@ closeLogin.addEventListener("click", (e) => {
   e.preventDefault();
   loginModal.style.opacity = 0;
   setTimeout(function () {
-    loginModal.style.display = "none";
+    registerForm.style.opacity = 0;
+    loginForm.style.opacity = 1;
     usrInput.value = "";
     pswInput.value = "";
+    usrRegInput.value = "";
+    pswRegInput.value = "";
+    pswRegSecInput.value = "";
+    registerForm.style.display = "none";
+    loginForm.style.display = "flex";
+    loginModal.style.display = "none";
   }, 500);
 });
 userBtn.addEventListener("click", (e) => {
@@ -53,6 +65,15 @@ userBtn.addEventListener("click", (e) => {
   loginModal.style.display = "flex";
   setTimeout(function () {
     loginModal.style.opacity = 1;
+  }, 500);
+});
+regLink.addEventListener("click", (e) => {
+  e.preventDefault();
+  loginForm.style.opacity = 0;
+  setTimeout(function () {
+    loginForm.style.display = "none";
+    registerForm.style.display = "flex";
+    registerForm.style.opacity = 1;
   }, 500);
 });
 /*INTERACTUAR MODAL ITEM*/
@@ -102,3 +123,5 @@ buyBtn.addEventListener("click", (e) => {
     });
   }, 500);
 });
+
+/*Register EMAIL BTN*/

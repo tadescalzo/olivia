@@ -356,6 +356,8 @@ body {
       width: 100%;
       height: 100%;
       position: relative;
+      opacity: 1;
+      transition: 0.5s;
       hr {
         width: 100%;
         border: 1px solid var(--main-text-color);
@@ -429,7 +431,7 @@ body {
           color: var(--main-white-color);
         }
       }
-      #regBtn {
+      #regLink {
         transition: 0.5s;
         font-weight: 700;
         &:visited {
@@ -437,6 +439,65 @@ body {
         }
         &:hover {
           color: var(--sec-text-color);
+        }
+      }
+    }
+    &__register {
+      display: none;
+      align-items: center;
+      justify-content: space-evenly;
+      flex-direction: column;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: 0.5s;
+      .iconInput {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: -1rem;
+      }
+      .textInput {
+        background: none;
+        border: none;
+        border-bottom: 2px solid var(--darker-grey);
+        outline: none;
+        margin-top: 0.5rem;
+        font-size: 1rem;
+        color: var(--main-text-color);
+        width: 80%;
+        font-family: "Roboto", sans-serif;
+        transition: 0.5s ease-in;
+        &:focus {
+          border-bottom: 2px solid var(--main-white-color);
+        }
+        &::placeholder {
+          color: var(--main-text-color);
+          text-align: center;
+        }
+      }
+      .fas,
+      .far {
+        margin-right: 0.5rem;
+        margin-top: 0.5rem;
+      }
+      #regBtn {
+        width: 75%;
+        height: 2.5rem;
+        outline: none;
+        border: none;
+        border-radius: 0.2em;
+        font-family: "Roboto", sans-serif;
+        font-weight: 700;
+        background: none;
+        border: 1px solid var(--darker-grey);
+        transition: 0.5s;
+        cursor: pointer;
+        &:hover {
+          background: var(--darker-grey);
+          border: 2px solid var(--sec-text-color);
+          color: var(--main-white-color);
         }
       }
     }
