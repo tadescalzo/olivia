@@ -1,8 +1,11 @@
 let closeAbout = document.querySelector(".about--modal__close");
 let closeLogin = document.querySelector(".closeLogin");
 let closeItem = document.querySelector(".selectedClose");
+let closeUpload = document.querySelector("#closeUpload");
 let loginModal = document.querySelector(".login");
 let aboutModal = document.querySelector(".about");
+let uploadModal = document.querySelector(".upload");
+let uploadItems = document.querySelector(".upload--modal");
 let itemModal = document.querySelector(".main--selected");
 let loginForm = document.querySelector(".login--modal__form");
 let registerForm = document.querySelector(".login--modal__register");
@@ -13,6 +16,8 @@ let itemBtns = document.getElementsByClassName("itemBtn");
 let sizesBtns = document.getElementsByClassName("selectedSizesInd");
 let buyBtn = document.querySelector(".selectedBuy");
 let regBtn = document.querySelector("#regBtn");
+let logBtn = document.querySelector("#logBtn");
+let upBtn = document.querySelector("#upBtn");
 let googleLogin = document.querySelector("#googleLogin");
 let logOut = document.querySelector("#logOut");
 let usrInput = document.getElementById("usrInput");
@@ -44,6 +49,7 @@ closeAbout.addEventListener("click", (e) => {
     aboutModal.style.display = "none";
   }, 500);
 });
+
 /*OPENS ABOUT MODAL*/
 aboutBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -52,18 +58,11 @@ aboutBtn.addEventListener("click", (e) => {
     aboutModal.style.opacity = 1;
   }, 500);
 });
+
 /*CLOSE LOGIN MODAL*/
 closeLogin.addEventListener("click", (e) => {
   e.preventDefault();
-  loginModal.style.opacity = 0;
-  setTimeout(function () {
-    registerForm.style.opacity = 0;
-    loginForm.style.opacity = 1;
-    deleteValues();
-    registerForm.style.display = "none";
-    loginForm.style.display = "flex";
-    loginModal.style.display = "none";
-  }, 500);
+  resetModal();
 });
 
 /*OPENS LOG IN MODAL*/
@@ -89,19 +88,16 @@ regLink.addEventListener("click", (e) => {
 /*REGISTER BUTTON*/
 regBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  let email = userRegInput.value;
+  let email = usrRegInput.value;
   if (pswRegInput.value === pswRegSecInput.value) {
+    let password = pswRegInput.value;
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then((userCredential) => {
-        usrInput.value = "";
-        pswInput.value = "";
-        usrRegInput.value = "";
-        pswRegInput.value = "";
-        pswRegSecInput.value = "";
+        deleteValues();
         var user = userCredential.user;
-        console.log("se creo ", user);
+        resetModal();
       })
       .catch((error) => {
         var errorCode = error.code;
@@ -110,6 +106,7 @@ regBtn.addEventListener("click", (e) => {
       });
   }
 });
+
 /*LOGIN GOOGLE*/
 googleLogin.addEventListener("click", (e) => {
   e.preventDefault();
@@ -118,16 +115,7 @@ googleLogin.addEventListener("click", (e) => {
     .signInWithPopup(provider)
     .then((result) => {
       var user = result.user;
-      console.log("buenas ", user);
-      loginModal.style.opacity = 0;
-      setTimeout(function () {
-        registerForm.style.opacity = 0;
-        loginForm.style.opacity = 1;
-        deleteValues();
-        registerForm.style.display = "none";
-        loginForm.style.display = "flex";
-        loginModal.style.display = "none";
-      }, 500);
+      resetModal();
     })
     .catch((error) => {
       var errorCode = error.code;
@@ -137,16 +125,45 @@ googleLogin.addEventListener("click", (e) => {
     });
 });
 
+/*LOGIN EMAIL*/
+logBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  let password = pswInput.value;
+  let email = usrInput.value;
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+      var user = userCredential.user;
+      resetModal();
+      // ...
+    })
+    .catch((error) => {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+    });
+});
+
 /*CHECKS IF THERE IS A LOGGED IN USER*/
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    userBtn.style.display = "none";
-    logOut.style.display = "block";
-    var uid = user.uid;
-    // ...
+    if (user.photoURL === "admin") {
+      var uid = user.uid;
+      userBtn.style.display = "none";
+      cartBtn.style.display = "none";
+      logOut.style.display = "block";
+      upBtn.style.display = "block";
+    } else {
+      userBtn.style.display = "none";
+      upBtn.style.display = "none";
+      logOut.style.display = "block";
+      cartBtn.style.display = "block";
+    }
   } else {
     userBtn.style.display = "block";
+    cartBtn.style.display = "block";
     logOut.style.display = "none";
+    upBtn.style.display = "none";
     cartBtn.addEventListener("click", (e) => {
       e.preventDefault();
       loginModal.style.display = "flex";
@@ -163,9 +180,7 @@ logOut.addEventListener("click", (e) => {
   firebase
     .auth()
     .signOut()
-    .then(() => {
-      console.log("chauchis");
-    })
+    .then(() => {})
     .catch((error) => {
       // An error happened.
     });
@@ -220,6 +235,24 @@ buyBtn.addEventListener("click", (e) => {
   }, 500);
 });
 
+/*UPLOAD MODAL*/
+upBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  uploadModal.style.display = "flex";
+  setTimeout(function () {
+    uploadModal.style.opacity = 1;
+    uploadItems.style.animation = "tothetop 0.8s linear forwards";
+  }, 500);
+});
+
+/*CLOSE UPLOAD*/
+closeUpload.addEventListener("click", () => {
+  uploadModal.style.opacity = 0;
+  setTimeout(() => {
+    uploadModal.style.display = "none";
+  }, 500);
+});
+
 /*FUNCTIONS*/
 
 const deleteValues = () => {
@@ -228,4 +261,16 @@ const deleteValues = () => {
   usrRegInput.value = "";
   pswRegInput.value = "";
   pswRegSecInput.value = "";
+};
+
+const resetModal = () => {
+  loginModal.style.opacity = 0;
+  setTimeout(function () {
+    registerForm.style.opacity = 0;
+    loginForm.style.opacity = 1;
+    deleteValues();
+    registerForm.style.display = "none";
+    loginForm.style.display = "flex";
+    loginModal.style.display = "none";
+  }, 500);
 };

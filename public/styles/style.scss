@@ -257,6 +257,38 @@ body {
   }
 }
 
+.upload {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.35);
+  top: 0;
+  transition: 0.5s;
+  position: fixed;
+  z-index: 3;
+  display: none;
+  opacity: 0;
+  align-items: flex-end;
+  &--modal {
+    width: 100%;
+    height: 75%;
+    background-color: var(--main-white-color);
+    border-radius: 1rem 1rem 0rem 0rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-direction: column;
+    transform: translateY(100%);
+  }
+  @keyframes tothetop {
+    from {
+      transform: translateY(100%);
+    }
+    to {
+      transform: translateY(0%);
+    }
+  }
+}
+
 .about {
   width: 100%;
   height: 100vh;
