@@ -116,6 +116,16 @@
         <span id="closeUpload">X</span>
         <h2 class="upload--modal__title">Subir item</h2>
         <label for="uploadTitle">Ingrese el nombre del producto</label><input type="text" id="uploadTitle" placeholder="Nombre">
+        <label for="uploadPrice">Precio</label><input type="text" placeholder="Precio" id="uploadPrecio">
+        <input type="button" value="Subir foto">
+        <label for="selectedSizesInd">Talles disponibles</label>
+        <div class="selectedSizes">
+            <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check1" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeS">S</label></div>
+            <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check2" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeM">M</label></div>
+            <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check3" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeL">L</label></div>
+            <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check4" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeXL">XL</label></div>
+        </div>
+        <input type="button" value="Publicar producto">
     </div>
 </section>
 <section class="about">
