@@ -7,11 +7,13 @@ let aboutModal = document.querySelector(".about");
 let uploadModal = document.querySelector(".upload");
 let uploadItems = document.querySelector(".upload--modal");
 let itemModal = document.querySelector(".main--selected");
+let mainItems = document.querySelector(".main--items");
 let loginForm = document.querySelector(".login--modal__form");
 let registerForm = document.querySelector(".login--modal__register");
 let userBtn = document.querySelector("#userBtn");
 let aboutBtn = document.querySelector("#aboutBtn");
 let cartBtn = document.querySelector("#cartBtn");
+let uploadItem = document.querySelector("#uploadItem");
 let itemBtns = document.getElementsByClassName("itemBtn");
 let sizesBtns = document.getElementsByClassName("selectedSizesInd");
 let buyBtn = document.querySelector(".selectedBuy");
@@ -25,6 +27,13 @@ let pswInput = document.getElementById("pswInput");
 let usrRegInput = document.getElementById("usrRegInput");
 let pswRegInput = document.getElementById("pswRegInput");
 let pswRegSecInput = document.getElementById("pswRegSecInput");
+let uploadTitle = document.querySelector("#uploadTitle");
+let uploadPrice = document.querySelector("#uploadPrice");
+let uploadProx = document.querySelector("#uploadProx");
+let checkUp1 = document.querySelector("#checkUp1");
+let checkUp2 = document.querySelector("#checkUp2");
+let checkUp3 = document.querySelector("#checkUp3");
+let checkUp4 = document.querySelector("#checkUp4");
 let regLink = document.getElementById("regLink");
 
 /*FIREBASE*/
@@ -213,7 +222,11 @@ function selectOne(id) {
   for (var i = 1; i <= 4; i++) {
     document.getElementById("check" + i).checked = false;
   }
-  document.getElementById(id).checked = true;
+  if (document.getElementById(id).checked == true) {
+    document.getElementById(id).checked = false;
+  } else {
+    document.getElementById(id).checked = true;
+  }
 }
 
 /*INTERACTUAR BOTON COMPRAR*/
@@ -253,6 +266,71 @@ closeUpload.addEventListener("click", () => {
   }, 500);
 });
 
+/*UPLOAD ITEM*/
+uploadItem.addEventListener("click", () => {
+  uploadModal.style.opacity = 0;
+  let title = uploadTitle.value;
+  let price = uploadPrice.value;
+  let prox = uploadProx.checked;
+  let sizeS = checkUp1.checked;
+  let sizeM = checkUp2.checked;
+  let sizeL = checkUp3.checked;
+  let sizeXL = checkUp4.checked;
+  db.collection("items")
+    .doc()
+    .set({
+      title: title,
+      price: price,
+      prox: prox,
+      size: {
+        s: sizeS,
+        m: sizeM,
+        l: sizeL,
+        xl: sizeXL,
+      },
+    })
+    .then(() => {
+      console.log("Document successfully written!");
+    })
+    .catch((error) => {
+      console.error("Error writing document: ", error);
+    });
+
+  setTimeout(function () {
+    mainItems.innerHTML = "";
+    uploadTitle.value = "";
+    uploadPrice.value = "";
+    uploadProx.checked = false;
+    checkUp1.checked = false;
+    checkUp2.checked = false;
+    checkUp3.checked = false;
+    checkUp4.checked = false;
+    uploadModal.style.display = "none";
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Producto subido",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    db.collection("items")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          let itemData = doc.data();
+          mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                                  <img class="cardImg" src="images/about.jpg" alt="">
+                                  <h2>${itemData.title}</h2>
+                                  <h3>$${itemData.price}</h3>
+                                  <footer class="itemBtn">Ver mas...</span>
+                                  </article>`;
+        });
+      });
+  }, 500);
+});
+
 /*FUNCTIONS*/
 
 const deleteValues = () => {
@@ -274,3 +352,19 @@ const resetModal = () => {
     loginModal.style.display = "none";
   }, 500);
 };
+
+db.collection("items")
+  .get()
+  .then((querySnapshot) => {
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
+      let itemData = doc.data();
+      mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <footer class="itemBtn">Ver mas...</span>
+                              </article>`;
+    });
+  });
