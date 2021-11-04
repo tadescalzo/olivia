@@ -14,7 +14,6 @@ let userBtn = document.querySelector("#userBtn");
 let aboutBtn = document.querySelector("#aboutBtn");
 let cartBtn = document.querySelector("#cartBtn");
 let uploadItem = document.querySelector("#uploadItem");
-let itemBtns = document.getElementsByClassName("itemBtn");
 let sizesBtns = document.getElementsByClassName("selectedSizesInd");
 let buyBtn = document.querySelector(".selectedBuy");
 let regBtn = document.querySelector("#regBtn");
@@ -206,16 +205,6 @@ closeItem.addEventListener("click", (e) => {
     }
   }, 500);
 });
-for (el of itemBtns) {
-  el.addEventListener("click", (e) => {
-    e.preventDefault();
-    console.log("cosa");
-    itemModal.style.display = "flex";
-    setTimeout(function () {
-      itemModal.style.opacity = 1;
-    }, 500);
-  });
-}
 
 /*SOLO UN CHECKBOX EN TAMAÑOS*/
 function selectOne(id) {
@@ -353,18 +342,38 @@ const resetModal = () => {
   }, 500);
 };
 
-db.collection("items")
-  .get()
-  .then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      console.log(doc.id, " => ", doc.data());
-      let itemData = doc.data();
-      mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+const loadDB = () => {
+  db.collection("items")
+    .get()
+    .then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        console.log(doc.id, " => ", doc.data());
+        let itemData = doc.data();
+        mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
                               <img class="cardImg" src="images/about.jpg" alt="">
                               <h2>${itemData.title}</h2>
                               <h3>$${itemData.price}</h3>
-                              <footer class="itemBtn">Ver mas...</span>
+                              <span class="itemBtn">Ver mas...</span>
                               </article>`;
+      });
     });
-  });
+};
+
+const promise1 = Promise.resolve(loadDB());
+
+promise1.then(() => {
+  console.log("termino diosss");
+  setTimeout(function () {
+    let itemBtns = document.getElementsByClassName("itemBtn");
+    for (el of itemBtns) {
+      el.addEventListener("click", () => {
+        console.log("opens");
+        itemModal.style.display = "flex";
+        setTimeout(function () {
+          itemModal.style.opacity = 1;
+        }, 500);
+      });
+    }
+  }, 2000);
+});
