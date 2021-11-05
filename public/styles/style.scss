@@ -143,9 +143,30 @@ body {
       justify-content: space-evenly;
       border: solid 1px #333;
       transition: 0.5s;
+
       .itemBtn {
         cursor: pointer;
         z-index: 3;
+      }
+    }
+    &__cardDisabled {
+      height: 325px;
+      width: 262px;
+      margin: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-evenly;
+      border: solid 1px #333;
+      opacity: 0.5;
+      pointer-events: none;
+      position: relative;
+      .proxAlert {
+        position: absolute;
+        top: 50%;
+        z-index: 4;
+        font-size: 2rem;
+        font-weight: 700;
       }
     }
     .cardImg {
@@ -292,7 +313,8 @@ body {
       height: 5rem;
     }
     #uploadTitle,
-    #uploadPrice {
+    #uploadPrice,
+    #uploadDesc {
       width: 75%;
       height: 2rem;
       border: none;

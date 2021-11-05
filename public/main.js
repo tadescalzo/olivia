@@ -1,6 +1,5 @@
 let closeAbout = document.querySelector(".about--modal__close");
 let closeLogin = document.querySelector(".closeLogin");
-let closeItem = document.querySelector(".selectedClose");
 let closeUpload = document.querySelector("#closeUpload");
 let loginModal = document.querySelector(".login");
 let aboutModal = document.querySelector(".about");
@@ -14,8 +13,6 @@ let userBtn = document.querySelector("#userBtn");
 let aboutBtn = document.querySelector("#aboutBtn");
 let cartBtn = document.querySelector("#cartBtn");
 let uploadItem = document.querySelector("#uploadItem");
-let sizesBtns = document.getElementsByClassName("selectedSizesInd");
-let buyBtn = document.querySelector(".selectedBuy");
 let regBtn = document.querySelector("#regBtn");
 let logBtn = document.querySelector("#logBtn");
 let upBtn = document.querySelector("#upBtn");
@@ -29,6 +26,7 @@ let pswRegSecInput = document.getElementById("pswRegSecInput");
 let uploadTitle = document.querySelector("#uploadTitle");
 let uploadPrice = document.querySelector("#uploadPrice");
 let uploadProx = document.querySelector("#uploadProx");
+let uploadDesc = document.querySelector("#uploadDesc");
 let checkUp1 = document.querySelector("#checkUp1");
 let checkUp2 = document.querySelector("#checkUp2");
 let checkUp3 = document.querySelector("#checkUp3");
@@ -194,18 +192,6 @@ logOut.addEventListener("click", (e) => {
     });
 });
 
-/*INTERACTUAR MODAL ITEM*/
-closeItem.addEventListener("click", (e) => {
-  e.preventDefault();
-  itemModal.style.opacity = 0;
-  setTimeout(function () {
-    itemModal.style.display = "none";
-    for (el of sizesBtns) {
-      el.checked = false;
-    }
-  }, 500);
-});
-
 /*SOLO UN CHECKBOX EN TAMAÑOS*/
 function selectOne(id) {
   for (var i = 1; i <= 4; i++) {
@@ -217,25 +203,6 @@ function selectOne(id) {
     document.getElementById(id).checked = true;
   }
 }
-
-/*INTERACTUAR BOTON COMPRAR*/
-buyBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  itemModal.style.opacity = 0;
-  setTimeout(function () {
-    itemModal.style.display = "none";
-    for (el of sizesBtns) {
-      el.checked = false;
-    }
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Agregado al carrito!",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-  }, 500);
-});
 
 /*UPLOAD MODAL*/
 upBtn.addEventListener("click", (e) => {
@@ -260,6 +227,7 @@ uploadItem.addEventListener("click", () => {
   uploadModal.style.opacity = 0;
   let title = uploadTitle.value;
   let price = uploadPrice.value;
+  let desc = uploadDesc.value;
   let prox = uploadProx.checked;
   let sizeS = checkUp1.checked;
   let sizeM = checkUp2.checked;
@@ -271,6 +239,7 @@ uploadItem.addEventListener("click", () => {
       title: title,
       price: price,
       prox: prox,
+      desc: desc,
       size: {
         s: sizeS,
         m: sizeM,
@@ -302,22 +271,10 @@ uploadItem.addEventListener("click", () => {
       showConfirmButton: false,
       timer: 1500,
     });
-    db.collection("items")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          console.log(doc.id, " => ", doc.data());
-          let itemData = doc.data();
-          mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
-                                  <img class="cardImg" src="images/about.jpg" alt="">
-                                  <h2>${itemData.title}</h2>
-                                  <h3>$${itemData.price}</h3>
-                                  <footer class="itemBtn">Ver mas...</span>
-                                  </article>`;
-        });
-      });
-  }, 500);
+  }, 1500);
+  setTimeout(function () {
+    location.reload();
+  }, 2500);
 });
 
 /*FUNCTIONS*/
@@ -350,12 +307,22 @@ const loadDB = () => {
         // doc.data() is never undefined for query doc snapshots
         console.log(doc.id, " => ", doc.data());
         let itemData = doc.data();
-        mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+        if (itemData.prox == false) {
+          mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
                               <img class="cardImg" src="images/about.jpg" alt="">
                               <h2>${itemData.title}</h2>
                               <h3>$${itemData.price}</h3>
                               <span class="itemBtn">Ver mas...</span>
                               </article>`;
+        } else {
+          mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+        }
       });
     });
 };
@@ -367,9 +334,72 @@ promise1.then(() => {
   setTimeout(function () {
     let itemBtns = document.getElementsByClassName("itemBtn");
     for (el of itemBtns) {
-      el.addEventListener("click", () => {
-        console.log("opens");
+      el.addEventListener("click", (e) => {
+        let parent = e.currentTarget.parentNode;
+        let data = parent.getAttribute("data-id");
         itemModal.style.display = "flex";
+        let docRef = db.collection("items").doc(data);
+        docRef
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              let item = doc.data();
+              itemModal.innerHTML = `<div class="main--selected__modal">
+                                        <span class="selectedClose">X</span>
+                                        <img class="selectedImg" src="images/about.jpg" alt="">
+                                        <div class="selectedInfo">
+                                            <h1 class="selectedTitle">${item.title}</h1>
+                                            <h2 class="selectedPrice">$${item.price}</h2>
+                                            <span class="selectedDesc">${item.desc}</span> 
+                                            <div class="selectedSizes">
+                                                <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check1" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeS">S</label></div>
+                                                <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check2" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeM">M</label></div>
+                                                <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check3" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeL">L</label></div>
+                                                <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check4" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeXL">XL</label></div>
+                                            </div>
+                                            <input data-id='${item.id}' class="selectedBuy" type="button" value="Añadir al carrito">   
+                                        </div>
+                                    </div>`;
+              /*CERRAR MODAL ITEM*/
+              let sizesBtns =
+                document.getElementsByClassName("selectedSizesInd");
+              let closeItem = document.querySelector(".selectedClose");
+              closeItem.addEventListener("click", (e) => {
+                e.preventDefault();
+                itemModal.style.opacity = 0;
+                setTimeout(function () {
+                  itemModal.style.display = "none";
+                  for (el of sizesBtns) {
+                    el.checked = false;
+                  }
+                }, 500);
+              });
+              /*INTERACTUAR BOTON COMPRAR*/
+              let buyBtn = document.querySelector(".selectedBuy");
+              buyBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                itemModal.style.opacity = 0;
+                setTimeout(function () {
+                  itemModal.style.display = "none";
+                  for (el of sizesBtns) {
+                    el.checked = false;
+                  }
+                  Swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Agregado al carrito!",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                }, 500);
+              });
+            } else {
+              console.log("No such document!");
+            }
+          })
+          .catch((error) => {
+            console.log("Error getting document:", error);
+          });
         setTimeout(function () {
           itemModal.style.opacity = 1;
         }, 500);

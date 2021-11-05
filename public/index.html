@@ -34,7 +34,6 @@
     </div>
 </header>
 <main class="main" id="main">
-    <div class="cho-container"></div>
     <div class="main--filters">
         <h2 class="main--filters__title">Filtros</h2>
         <i class="fas fa-bars"></i>
@@ -61,23 +60,7 @@
         <h2 class='main--items__title'>Tienda</h2>
     </div>
     <div class="main--selected">
-        <div class="main--selected__modal">
-            <span class="selectedClose">X</span>
-            <img class="selectedImg" src="images/about.jpg" alt="">
-            <div class="selectedInfo">
-                <h1 class="selectedTitle">Sweater</h1>
-                <h2 class="selectedPrice">$1000</h2>
-                <span class="selectedDesc">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo dolorum ducimus perspiciatis. Quae optio voluptates nisi consequuntur? Explicabo veritatis cum quia quasi corrupti, numquam corporis in quas molestias illo deleniti!</span> 
-                <div class="selectedSizes">
-                    <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check1" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeS">S</label></div>
-                    <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check2" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeM">M</label></div>
-                    <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check3" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeL">L</label></div>
-                    <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check4" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeXL">XL</label></div>
-                    
-                </div>
-                <input class="selectedBuy" type="button" value="Añadir al carrito">   
-            </div>
-        </div>
+        
     </div>
 </main>    
 <section class="upload">
@@ -89,6 +72,9 @@
         </div>
         <div class="uploadSpace">
             <label for="uploadPrice">Precio</label><input type="text" placeholder="Precio" id="uploadPrice">
+        </div>
+        <div class="uploadSpace">
+            <label for="uploadDesc">Descripcion</label><input type="text" name="description" placeholder="Descripcion" id="uploadDesc">
         </div>
         <div class="uploadSpace">
             <label for="uploadImg">Seleccione una imagen</label>
