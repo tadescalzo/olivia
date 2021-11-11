@@ -6,6 +6,7 @@ let aboutModal = document.querySelector(".about");
 let uploadModal = document.querySelector(".upload");
 let uploadItems = document.querySelector(".upload--modal");
 let itemModal = document.querySelector(".main--selected");
+let cartModal = document.querySelector(".cart");
 let mainItems = document.querySelector(".main--items");
 let loginForm = document.querySelector(".login--modal__form");
 let registerForm = document.querySelector(".login--modal__register");
@@ -91,6 +92,16 @@ regLink.addEventListener("click", (e) => {
   }, 500);
 });
 
+/*OPENS CART*/
+cartBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  console.log("click");
+  cartModal.style.display = "flex";
+  setTimeout(() => {
+    cartModal.style.opacity = 1;
+  }, 500);
+});
+
 /*REGISTER BUTTON*/
 regBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -104,6 +115,23 @@ regBtn.addEventListener("click", (e) => {
         deleteValues();
         var user = userCredential.user;
         resetModal();
+        let userId = user.uid;
+        let userMail = mail;
+        db.collection("users")
+          .doc(userId)
+          .set({
+            userMail: userMail,
+            userStatus: "user",
+            userId: userId,
+            userCart: "",
+          })
+          .then(() => {
+            console.log("Document successfully written!");
+            location.reload();
+          })
+          .catch((error) => {
+            console.error("Error writing document: ", error);
+          });
       })
       .catch((error) => {
         var errorCode = error.code;
@@ -122,15 +150,9 @@ googleLogin.addEventListener("click", (e) => {
     .then((result) => {
       var user = result.user;
       resetModal();
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      var email = error.email;
-      var credential = error.credential;
+      location.reload();
     });
 });
-
 /*LOGIN EMAIL*/
 logBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -153,18 +175,161 @@ logBtn.addEventListener("click", (e) => {
 /*CHECKS IF THERE IS A LOGGED IN USER*/
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
-    if (user.photoURL === "admin") {
-      var uid = user.uid;
-      userBtn.style.display = "none";
-      cartBtn.style.display = "none";
-      logOut.style.display = "block";
-      upBtn.style.display = "block";
-    } else {
-      userBtn.style.display = "none";
-      upBtn.style.display = "none";
-      logOut.style.display = "block";
-      cartBtn.style.display = "block";
-    }
+    var docRef = db.collection("users").doc(user.uid);
+    console.log(user.uid);
+    docRef
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          let usuario = doc.data();
+          const { userMail, userStatus, userId, userCart } = usuario;
+          if (userStatus === "admin") {
+            var uid = user.uid;
+            userBtn.style.display = "none";
+            cartBtn.style.display = "none";
+            logOut.style.display = "block";
+            upBtn.style.display = "block";
+          } else {
+            userBtn.style.display = "none";
+            upBtn.style.display = "none";
+            logOut.style.display = "block";
+            cartBtn.style.display = "block";
+          }
+          let cart = userCart;
+          promise1.then(() => {
+            setTimeout(function () {
+              let itemBtns = document.getElementsByClassName("itemBtn");
+              for (el of itemBtns) {
+                el.addEventListener("click", (e) => {
+                  let parent = e.currentTarget.parentNode;
+                  let data = parent.getAttribute("data-id");
+                  itemModal.style.display = "flex";
+                  let itemRef = db.collection("items").doc(data);
+                  itemRef
+                    .get()
+                    .then((doc) => {
+                      if (doc.exists) {
+                        let item = doc.data();
+                        itemModal.innerHTML = `<div class="main--selected__modal">
+                                                  <span class="selectedClose">X</span>
+                                                  <img class="selectedImg" src="images/about.jpg" alt="">
+                                                  <div class="selectedInfo" data-id='${doc.id}'>
+                                                      <h1 class="selectedTitle">${item.title}</h1>
+                                                      <h2 class="selectedPrice">$${item.price}</h2>
+                                                      <span class="selectedDesc">${item.desc}</span> 
+                                                      <div class="selectedSizes">
+                                                          <div class="sizeSize"><input class="selectedSizesInd" value='S' type="checkbox" id="check1" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeS">S</label></div>
+                                                          <div class="sizeSize"><input class="selectedSizesInd" value='M' type="checkbox" id="check2" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeM">M</label></div>
+                                                          <div class="sizeSize"><input class="selectedSizesInd" value='L' type="checkbox" id="check3" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeL">L</label></div>
+                                                          <div class="sizeSize"><input class="selectedSizesInd" value='XL' type="checkbox" id="check4" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeXL">XL</label></div>
+                                                      </div>
+                                                      <input  class="selectedBuy" type="button" value="Añadir al carrito">   
+                                                  </div>
+                                              </div>`;
+                        /*CERRAR MODAL ITEM*/
+                        let sizesBtns =
+                          document.getElementsByClassName("selectedSizesInd");
+                        let closeItem =
+                          document.querySelector(".selectedClose");
+                        closeItem.addEventListener("click", (e) => {
+                          e.preventDefault();
+                          itemModal.style.opacity = 0;
+                          setTimeout(function () {
+                            itemModal.style.display = "none";
+                            for (el of sizesBtns) {
+                              el.checked = false;
+                            }
+                          }, 500);
+                        });
+                        /*INTERACTUAR BOTON COMPRAR*/
+                        let buyBtn = document.querySelector(".selectedBuy");
+                        buyBtn.addEventListener("click", (e) => {
+                          e.preventDefault();
+                          let buyTitle =
+                            document.querySelector(".selectedTitle");
+                          let buyPrice =
+                            document.querySelector(".selectedPrice");
+                          let title = buyTitle.innerHTML;
+                          let price = buyPrice.innerHTML;
+                          let parent = e.currentTarget.parentNode;
+                          let id = parent.getAttribute("data-id");
+                          let size = "";
+                          for (el of sizesBtns) {
+                            if (el.checked == true) {
+                              size = el.value;
+                            }
+                            el.checked = false;
+                          }
+                          const product = {
+                            title: title,
+                            price: price,
+                            size: size,
+                            id: id,
+                          };
+                          cart = [...cart, product];
+                          console.log(cart);
+
+                          docRef
+                            .update({
+                              userCart: cart,
+                            })
+                            .then(() => {
+                              console.log("Document successfully updated!");
+                            })
+                            .catch((error) => {
+                              // The document probably doesn't exist.
+                              console.error("Error updating document: ", error);
+                            });
+
+                          itemModal.style.opacity = 0;
+                          setTimeout(function () {
+                            itemModal.style.display = "none";
+                            for (el of sizesBtns) {
+                              el.checked = false;
+                            }
+                            Swal.fire({
+                              position: "top-end",
+                              icon: "success",
+                              title: "Agregado al carrito!",
+                              showConfirmButton: false,
+                              timer: 1500,
+                            });
+                          }, 500);
+                        });
+                      } else {
+                        console.log("No such document!");
+                      }
+                    })
+                    .catch((error) => {
+                      console.log("Error getting document:", error);
+                    });
+                  setTimeout(function () {
+                    itemModal.style.opacity = 1;
+                  }, 500);
+                });
+              }
+            }, 3000);
+          });
+        } else {
+          db.collection("users")
+            .doc(user.uid)
+            .set({
+              userMail: user.email,
+              userStatus: "user",
+              userId: user.uid,
+              userCart: "",
+            })
+            .then(() => {
+              console.log("Document successfully written!");
+            })
+            .catch((error) => {
+              console.error("Error writing document: ", error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.log("Error getting document:", error);
+      });
   } else {
     userBtn.style.display = "block";
     cartBtn.style.display = "block";
@@ -304,8 +469,6 @@ const loadDB = () => {
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        console.log(doc.id, " => ", doc.data());
         let itemData = doc.data();
         if (itemData.prox == false) {
           mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
@@ -328,82 +491,3 @@ const loadDB = () => {
 };
 
 const promise1 = Promise.resolve(loadDB());
-
-promise1.then(() => {
-  console.log("termino diosss");
-  setTimeout(function () {
-    let itemBtns = document.getElementsByClassName("itemBtn");
-    for (el of itemBtns) {
-      el.addEventListener("click", (e) => {
-        let parent = e.currentTarget.parentNode;
-        let data = parent.getAttribute("data-id");
-        itemModal.style.display = "flex";
-        let docRef = db.collection("items").doc(data);
-        docRef
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              let item = doc.data();
-              itemModal.innerHTML = `<div class="main--selected__modal">
-                                        <span class="selectedClose">X</span>
-                                        <img class="selectedImg" src="images/about.jpg" alt="">
-                                        <div class="selectedInfo">
-                                            <h1 class="selectedTitle">${item.title}</h1>
-                                            <h2 class="selectedPrice">$${item.price}</h2>
-                                            <span class="selectedDesc">${item.desc}</span> 
-                                            <div class="selectedSizes">
-                                                <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check1" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeS">S</label></div>
-                                                <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check2" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeM">M</label></div>
-                                                <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check3" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeL">L</label></div>
-                                                <div class="sizeSize"><input class="selectedSizesInd" type="checkbox" id="check4" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeXL">XL</label></div>
-                                            </div>
-                                            <input data-id='${item.id}' class="selectedBuy" type="button" value="Añadir al carrito">   
-                                        </div>
-                                    </div>`;
-              /*CERRAR MODAL ITEM*/
-              let sizesBtns =
-                document.getElementsByClassName("selectedSizesInd");
-              let closeItem = document.querySelector(".selectedClose");
-              closeItem.addEventListener("click", (e) => {
-                e.preventDefault();
-                itemModal.style.opacity = 0;
-                setTimeout(function () {
-                  itemModal.style.display = "none";
-                  for (el of sizesBtns) {
-                    el.checked = false;
-                  }
-                }, 500);
-              });
-              /*INTERACTUAR BOTON COMPRAR*/
-              let buyBtn = document.querySelector(".selectedBuy");
-              buyBtn.addEventListener("click", (e) => {
-                e.preventDefault();
-                itemModal.style.opacity = 0;
-                setTimeout(function () {
-                  itemModal.style.display = "none";
-                  for (el of sizesBtns) {
-                    el.checked = false;
-                  }
-                  Swal.fire({
-                    position: "top-end",
-                    icon: "success",
-                    title: "Agregado al carrito!",
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
-                }, 500);
-              });
-            } else {
-              console.log("No such document!");
-            }
-          })
-          .catch((error) => {
-            console.log("Error getting document:", error);
-          });
-        setTimeout(function () {
-          itemModal.style.opacity = 1;
-        }, 500);
-      });
-    }
-  }, 2000);
-});
