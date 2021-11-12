@@ -33,6 +33,7 @@ let checkUp2 = document.querySelector("#checkUp2");
 let checkUp3 = document.querySelector("#checkUp3");
 let checkUp4 = document.querySelector("#checkUp4");
 let regLink = document.getElementById("regLink");
+let itemsCart = document.querySelector(".cart--modal__items");
 
 /*FIREBASE*/
 const firebaseConfig = {
@@ -89,16 +90,6 @@ regLink.addEventListener("click", (e) => {
     loginForm.style.display = "none";
     registerForm.style.display = "flex";
     registerForm.style.opacity = 1;
-  }, 500);
-});
-
-/*OPENS CART*/
-cartBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  console.log("click");
-  cartModal.style.display = "flex";
-  setTimeout(() => {
-    cartModal.style.opacity = 1;
   }, 500);
 });
 
@@ -280,7 +271,7 @@ firebase.auth().onAuthStateChanged((user) => {
                               // The document probably doesn't exist.
                               console.error("Error updating document: ", error);
                             });
-
+                          /*CLOSE AFTER BUY*/
                           itemModal.style.opacity = 0;
                           setTimeout(function () {
                             itemModal.style.display = "none";
@@ -309,6 +300,23 @@ firebase.auth().onAuthStateChanged((user) => {
                 });
               }
             }, 3000);
+          });
+          /*OPENS CART*/
+          cartBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            console.log("holi");
+            itemsCart.innerHTML = "";
+            cartModal.style.display = "flex";
+            for (el of cart) {
+              itemsCart.innerHTML += `<article class='cartItem' data-id='${el.id}'>
+                                                              <h2>${el.title}</h2>
+                                                              <h3>$${el.price}</h3>
+                                                              <h3>${el.size}</h3>
+                                                              </article>`;
+            }
+            setTimeout(() => {
+              cartModal.style.opacity = 1;
+            }, 500);
           });
         } else {
           db.collection("users")
