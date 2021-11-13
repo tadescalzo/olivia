@@ -1,6 +1,7 @@
 let closeAbout = document.querySelector(".about--modal__close");
 let closeLogin = document.querySelector(".closeLogin");
 let closeUpload = document.querySelector("#closeUpload");
+let closeCart = document.querySelector(".cart--modal__close");
 let loginModal = document.querySelector(".login");
 let aboutModal = document.querySelector(".about");
 let uploadModal = document.querySelector(".upload");
@@ -34,6 +35,7 @@ let checkUp3 = document.querySelector("#checkUp3");
 let checkUp4 = document.querySelector("#checkUp4");
 let regLink = document.getElementById("regLink");
 let itemsCart = document.querySelector(".cart--modal__items");
+let eraseCart = document.querySelector("#eraseCart");
 
 /*FIREBASE*/
 const firebaseConfig = {
@@ -187,11 +189,13 @@ firebase.auth().onAuthStateChanged((user) => {
           }
           callPromise.then(
             setTimeout(() => {
+              /*OPENS SELECTED ITEM MODAL*/
               let itemBtns = document.getElementsByClassName("itemBtn");
               for (el of itemBtns) {
                 el.addEventListener("click", (e) => {
                   let parent = e.currentTarget.parentNode;
                   let data = parent.getAttribute("data-id");
+                  /*OPENS SELECTED ITEM MODAL*/
                   itemModal.style.display = "flex";
                   let itemRef = db.collection("items").doc(data);
                   itemRef
@@ -200,22 +204,22 @@ firebase.auth().onAuthStateChanged((user) => {
                       if (doc.exists) {
                         let item = doc.data();
                         itemModal.innerHTML = `<div class="main--selected__modal">
-                                        <span class="selectedClose">X</span>
-                                        <img class="selectedImg" src="images/about.jpg" alt="">
-                                        <div class="selectedInfo" data-id='${doc.id}'>
-                                            <h1 class="selectedTitle">${item.title}</h1>
-                                            <h2 class="selectedPrice">$${item.price}</h2>
-                                            <span class="selectedDesc">${item.desc}</span> 
-                                            <div class="selectedSizes">
-                                                <div class="sizeSize"><input class="selectedSizesInd" value='S' type="checkbox" id="check1" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeS">S</label></div>
-                                                <div class="sizeSize"><input class="selectedSizesInd" value='M' type="checkbox" id="check2" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeM">M</label></div>
-                                                <div class="sizeSize"><input class="selectedSizesInd" value='L' type="checkbox" id="check3" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeL">L</label></div>
-                                                <div class="sizeSize"><input class="selectedSizesInd" value='XL' type="checkbox" id="check4" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeXL">XL</label></div>
-                                            </div>
-                                            <input  class="selectedBuy" type="button" value="Añadir al carrito">   
-                                        </div>
-                                    </div>`;
-                        /*CERRAR MODAL ITEM*/
+                                              <span class="selectedClose">X</span>
+                                              <img class="selectedImg" src="images/about.jpg" alt="">
+                                              <div class="selectedInfo" data-id='${doc.id}'>
+                                                  <h1 class="selectedTitle">${item.title}</h1>
+                                                  <h2 class="selectedPrice">$${item.price}</h2>
+                                                  <span class="selectedDesc">${item.desc}</span> 
+                                                  <div class="selectedSizes">
+                                                      <div class="sizeSize"><input class="selectedSizesInd" value='S' type="checkbox" id="check1" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeS">S</label></div>
+                                                      <div class="sizeSize"><input class="selectedSizesInd" value='M' type="checkbox" id="check2" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeM">M</label></div>
+                                                      <div class="sizeSize"><input class="selectedSizesInd" value='L' type="checkbox" id="check3" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeL">L</label></div>
+                                                      <div class="sizeSize"><input class="selectedSizesInd" value='XL' type="checkbox" id="check4" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeXL">XL</label></div>
+                                                  </div>
+                                                  <input  class="selectedBuy" type="button" value="Añadir al carrito">   
+                                              </div>
+                                          </div>`;
+                        /*CLOSES SELECTED ITEM MODAL*/
                         let sizesBtns =
                           document.getElementsByClassName("selectedSizesInd");
                         let closeItem =
@@ -230,7 +234,7 @@ firebase.auth().onAuthStateChanged((user) => {
                             }
                           }, 500);
                         });
-                        /*INTERACTUAR BOTON COMPRAR*/
+                        /*BUY ITEM FUNCTION*/
                         let buyBtn = document.querySelector(".selectedBuy");
                         buyBtn.addEventListener("click", (e) => {
                           e.preventDefault();
@@ -257,7 +261,7 @@ firebase.auth().onAuthStateChanged((user) => {
                           };
                           cart = [...cart, product];
                           console.log(cart);
-
+                          /*UPDATING CART*/
                           docRef
                             .update({
                               userCart: cart,
@@ -300,21 +304,19 @@ firebase.auth().onAuthStateChanged((user) => {
             }, 600)
           );
 
-          /*OPENS CART*/
+          /*OPENS CART SCREEN*/
           let cart = userCart;
           cartBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            console.log("holi");
+            console.log(cart);
             itemsCart.innerHTML = "";
             cartModal.style.display = "flex";
-            for (el of cart) {
-              itemsCart.innerHTML += `<article class='cartItem' data-id='${el.id}'>
-                                                              <h2>${el.title}</h2>
-                                                              <h3>$${el.price}</h3>
-                                                              <h3>${el.size}</h3>
-                                                              <input class='deleteItemsBtn' type='button' value='Borrar'>
-                                                              </article>`;
+            if (cart.length == 0) {
+              itemsCart.innerHTML = "<h1>NO HAY ITEMS</h1>";
             }
+            loadCart(cart);
+
+            /*DELETE ITEMS FROM CART*/
             let deleteItemsBtn =
               document.getElementsByClassName("deleteItemsBtn");
             setTimeout(() => {
@@ -325,35 +327,59 @@ firebase.auth().onAuthStateChanged((user) => {
                   let data = parent.getAttribute("data-id");
                   let cartRef = db.collection("users").doc(user.uid);
                   console.log(data);
-                  cartRef.get().then((doc) => {
-                    let searchCart = doc.data();
-                    let cart = searchCart.userCart;
-                    console.log(cart);
-                    for (el of cart) {
-                      if (el.id == data) {
-                        let deleting = cart.indexOf(el);
-                        console.log(deleting);
-                        cart.splice(deleting, 1);
-                        cartRef
-                          .update({
-                            userCart: cart,
-                          })
-                          .then(() => {
-                            console.log("Document successfully updated!");
-                          })
-                          .catch((error) => {
-                            // The document probably doesn't exist.
-                            console.error("Error updating document: ", error);
-                          });
-                      }
+                  console.log(cart);
+                  for (el of cart) {
+                    if (el.id == data) {
+                      let deleting = cart.indexOf(el);
+                      console.log(deleting);
+                      cart.splice(deleting, 1);
+                      cartRef
+                        .update({
+                          userCart: cart,
+                        })
+                        .then(() => {
+                          console.log("Document successfully updated!");
+                        })
+                        .catch((error) => {
+                          console.error("Error updating document: ", error);
+                        });
                     }
-                  });
+                  }
+                  itemsCart.innerHTML = "";
+                  loadCart(cart);
+                  if (cart.length == 0) {
+                    itemsCart.innerHTML = "<h1>NO HAY ITEMS</h1>";
+                  }
                 });
               }
               cartModal.style.opacity = 1;
             }, 500);
           });
+          /*CLOSES CART SCREEN*/
+          closeCart.addEventListener("click", () => {
+            cartModal.style.opacity = 0;
+            itemsCart.innerHTML = "";
+            setTimeout(() => {
+              cartModal.style.display = "none";
+            }, 500);
+          });
+          /*DELETE EVERYTING FROM CART*/
+          eraseCart.addEventListener("click", () => {
+            docRef
+              .update({
+                userCart: "",
+              })
+              .then(() => {
+                itemsCart.innerHTML = "<h1>NO HAY ITEMS</h1>";
+                cart.length = "";
+              })
+              .catch((error) => {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+              });
+          });
         } else {
+          /*FUNCTION TO CREATE USER DB*/
           db.collection("users")
             .doc(user.uid)
             .set({
@@ -533,8 +559,21 @@ const loadDB = () => {
     });
 };
 
-const promise1 = Promise.resolve(loadDB());
+const loadCart = (cart) => {
+  for (el of cart) {
+    itemsCart.innerHTML += `<article class='cartItem' data-id='${el.id}'>
+                                                    <div class='cartDiv'>
+                                                    <h2 class='cartTitle'>${el.title}</h2>
+                                                    <h3 class='cartSize'>${el.size}</h3>
+                                                    </div>
+                                                    <h3 class='cartPrice'>${el.price}</h3>
+                                                    
+                                                    <input class='deleteItemsBtn' type='button' value='Borrar'>
+                                                    </article>`;
+  }
+};
 
+/**/
 const callPromise = new Promise((resolve, reject) => {
   setTimeout(function () {
     resolve(loadDB());
