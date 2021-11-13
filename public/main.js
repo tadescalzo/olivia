@@ -167,7 +167,6 @@ logBtn.addEventListener("click", (e) => {
 firebase.auth().onAuthStateChanged((user) => {
   if (user) {
     var docRef = db.collection("users").doc(user.uid);
-    console.log(user.uid);
     docRef
       .get()
       .then((doc) => {
@@ -186,9 +185,8 @@ firebase.auth().onAuthStateChanged((user) => {
             logOut.style.display = "block";
             cartBtn.style.display = "block";
           }
-          let cart = userCart;
-          promise1.then(() => {
-            setTimeout(function () {
+          callPromise.then(
+            setTimeout(() => {
               let itemBtns = document.getElementsByClassName("itemBtn");
               for (el of itemBtns) {
                 el.addEventListener("click", (e) => {
@@ -202,21 +200,21 @@ firebase.auth().onAuthStateChanged((user) => {
                       if (doc.exists) {
                         let item = doc.data();
                         itemModal.innerHTML = `<div class="main--selected__modal">
-                                                  <span class="selectedClose">X</span>
-                                                  <img class="selectedImg" src="images/about.jpg" alt="">
-                                                  <div class="selectedInfo" data-id='${doc.id}'>
-                                                      <h1 class="selectedTitle">${item.title}</h1>
-                                                      <h2 class="selectedPrice">$${item.price}</h2>
-                                                      <span class="selectedDesc">${item.desc}</span> 
-                                                      <div class="selectedSizes">
-                                                          <div class="sizeSize"><input class="selectedSizesInd" value='S' type="checkbox" id="check1" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeS">S</label></div>
-                                                          <div class="sizeSize"><input class="selectedSizesInd" value='M' type="checkbox" id="check2" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeM">M</label></div>
-                                                          <div class="sizeSize"><input class="selectedSizesInd" value='L' type="checkbox" id="check3" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeL">L</label></div>
-                                                          <div class="sizeSize"><input class="selectedSizesInd" value='XL' type="checkbox" id="check4" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeXL">XL</label></div>
-                                                      </div>
-                                                      <input  class="selectedBuy" type="button" value="Añadir al carrito">   
-                                                  </div>
-                                              </div>`;
+                                        <span class="selectedClose">X</span>
+                                        <img class="selectedImg" src="images/about.jpg" alt="">
+                                        <div class="selectedInfo" data-id='${doc.id}'>
+                                            <h1 class="selectedTitle">${item.title}</h1>
+                                            <h2 class="selectedPrice">$${item.price}</h2>
+                                            <span class="selectedDesc">${item.desc}</span> 
+                                            <div class="selectedSizes">
+                                                <div class="sizeSize"><input class="selectedSizesInd" value='S' type="checkbox" id="check1" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeS">S</label></div>
+                                                <div class="sizeSize"><input class="selectedSizesInd" value='M' type="checkbox" id="check2" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeM">M</label></div>
+                                                <div class="sizeSize"><input class="selectedSizesInd" value='L' type="checkbox" id="check3" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeL">L</label></div>
+                                                <div class="sizeSize"><input class="selectedSizesInd" value='XL' type="checkbox" id="check4" onclick="selectOne(this.id)"><label class="sizeLabel" for="sizeXL">XL</label></div>
+                                            </div>
+                                            <input  class="selectedBuy" type="button" value="Añadir al carrito">   
+                                        </div>
+                                    </div>`;
                         /*CERRAR MODAL ITEM*/
                         let sizesBtns =
                           document.getElementsByClassName("selectedSizesInd");
@@ -299,9 +297,11 @@ firebase.auth().onAuthStateChanged((user) => {
                   }, 500);
                 });
               }
-            }, 3000);
-          });
+            }, 600)
+          );
+
           /*OPENS CART*/
+          let cart = userCart;
           cartBtn.addEventListener("click", (e) => {
             e.preventDefault();
             console.log("holi");
@@ -312,9 +312,44 @@ firebase.auth().onAuthStateChanged((user) => {
                                                               <h2>${el.title}</h2>
                                                               <h3>$${el.price}</h3>
                                                               <h3>${el.size}</h3>
+                                                              <input class='deleteItemsBtn' type='button' value='Borrar'>
                                                               </article>`;
             }
+            let deleteItemsBtn =
+              document.getElementsByClassName("deleteItemsBtn");
             setTimeout(() => {
+              for (el of deleteItemsBtn) {
+                el.addEventListener("click", (e) => {
+                  let child = event.currentTarget;
+                  let parent = child.parentNode;
+                  let data = parent.getAttribute("data-id");
+                  let cartRef = db.collection("users").doc(user.uid);
+                  console.log(data);
+                  cartRef.get().then((doc) => {
+                    let searchCart = doc.data();
+                    let cart = searchCart.userCart;
+                    console.log(cart);
+                    for (el of cart) {
+                      if (el.id == data) {
+                        let deleting = cart.indexOf(el);
+                        console.log(deleting);
+                        cart.splice(deleting, 1);
+                        cartRef
+                          .update({
+                            userCart: cart,
+                          })
+                          .then(() => {
+                            console.log("Document successfully updated!");
+                          })
+                          .catch((error) => {
+                            // The document probably doesn't exist.
+                            console.error("Error updating document: ", error);
+                          });
+                      }
+                    }
+                  });
+                });
+              }
               cartModal.style.opacity = 1;
             }, 500);
           });
@@ -499,3 +534,9 @@ const loadDB = () => {
 };
 
 const promise1 = Promise.resolve(loadDB());
+
+const callPromise = new Promise((resolve, reject) => {
+  setTimeout(function () {
+    resolve(loadDB());
+  }, 500);
+});
