@@ -6,6 +6,7 @@ let loginModal = document.querySelector(".login");
 let aboutModal = document.querySelector(".about");
 let uploadModal = document.querySelector(".upload");
 let uploadItems = document.querySelector(".upload--modal");
+let confirmModal = document.querySelector(".cart--modal__confirm");
 let itemModal = document.querySelector(".main--selected");
 let cartModal = document.querySelector(".cart");
 let mainItems = document.querySelector(".main--items");
@@ -36,6 +37,7 @@ let checkUp4 = document.querySelector("#checkUp4");
 let regLink = document.getElementById("regLink");
 let itemsCart = document.querySelector(".cart--modal__items");
 let eraseCart = document.querySelector("#eraseCart");
+let buyCart = document.querySelector("#buyCart");
 
 /*FIREBASE*/
 const firebaseConfig = {
@@ -359,8 +361,14 @@ firebase.auth().onAuthStateChanged((user) => {
           closeCart.addEventListener("click", () => {
             cartModal.style.opacity = 0;
             itemsCart.innerHTML = "";
+            action = false;
             setTimeout(() => {
               cartModal.style.display = "none";
+              eraseCart.style.display = "block";
+              confirmModal.style.display = "none";
+              confirmModal.style.opacity = 0;
+              itemsCart.style.opacity = 1;
+              itemsCart.style.display = "flex";
             }, 500);
           });
           /*DELETE EVERYTING FROM CART*/
@@ -377,6 +385,18 @@ firebase.auth().onAuthStateChanged((user) => {
                 // The document probably doesn't exist.
                 console.error("Error updating document: ", error);
               });
+          });
+          /*FIRST BUY CART ACCTION*/
+          let action = false;
+          buyCart.addEventListener("click", () => {
+            itemsCart.style.opacity = 0;
+            confirmModal.style.display = "flex";
+            action = true;
+            eraseCart.style.display = "none";
+            setTimeout(() => {
+              itemsCart.style.display = "none";
+              confirmModal.style.opacity = 1;
+            }, 500);
           });
         } else {
           /*FUNCTION TO CREATE USER DB*/
