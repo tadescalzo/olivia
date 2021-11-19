@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,197 +14,241 @@
     <link rel="stylesheet" href="styles/style.css">
     <script src="path/from/html/page/to/jquery.min.js"></script>
 </head>
+
 <body>
-<header class="header">
-    <svg class="header--background" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" viewBox="0 0 1920 1080"><rect width="1920" height="1080" fill="#878787"></rect><g transform="matrix(0.9959292143521045,0.5749999999999998,-0.5749999999999998,0.9959292143521045,314.3592972816298,-542.9289646711111)"><path d="M0,-1080C1.3217940841244722,-976.8173785057176,-8.551833682317397,-623.8825740721603,7.930764504746833,-460.90427103430534C24.413362691811063,-297.92596799645037,92.86683622794907,-266.5350072117999,98.89558912238539,-102.13018177287046C104.92434201682171,62.274643666059006,64.50756325285384,310.6289258589918,44.1032818713648,525.5246815992714C23.69900048987576,740.420437339551,-18.860572672646594,1003.6944654543723,-23.530099166548837,1187.2443526688073C-28.19962566045108,1370.7942398832424,12.164439713526528,1464.698063664016,16.086122907951335,1626.8240048858815C20.00780610237614,1788.949946107747,2.6810204846585557,2071.137334147647,0,2160L 1920 2160 L 1920 -1080 Z" fill="url(&quot;#SvgjsLinearGradient1150&quot;)"></path><path d="M640,-1080C640.3942573498782,-976.6515388541455,652.4456269567461,-630.9161293345518,642.365544099269,-459.909233124873C632.2854612417918,-288.90233691519427,562.4306522923214,-201.83817204586015,579.519502855137,-53.958622741927456C596.6083534179527,93.92092656200523,738.5639994145597,219.98623854408416,744.8986474761632,427.3680626987232C751.2332955377667,634.7498868533622,629.8432826612016,993.6690107769238,617.5273912247583,1190.3323221859066C605.211499788315,1386.9956335948893,667.2578640616301,1445.7366515169379,671.0032988575038,1607.34793115262C674.7487336533774,1768.9592107883022,645.1672164762506,2067.89132185877,640,2160L 1920 2160 L 1920 -1080 Z" fill="url(&quot;#SvgjsLinearGradient1151&quot;)"></path><path d="M1280,-1080C1268.2145735159424,-1021.1275075922546,1197.3820385882996,-882.3974769804171,1209.2874410956542,-726.7650455535274C1221.192843603009,-571.1326141266378,1339.7695767132468,-308.934782984401,1351.4324150441275,-146.20541143866245C1363.0952533750083,16.523960107076107,1308.1429818724077,87.68362091681564,1279.264471080939,249.61118372090385C1250.3859602894704,411.53874652499206,1176.7698709595318,677.0570220005175,1178.161350295316,825.3599653858669C1179.5528296311002,973.6629087712163,1271.8898834441782,993.461830163627,1287.6133470956447,1139.4288440330001C1303.3368107471113,1285.3958579023733,1273.7710233867224,1531.0668559409387,1272.502132204115,1701.1620486021054C1271.2332410215076,1871.2572412632721,1278.7503553673525,2083.527008100351,1280,2160L 1920 2160 L 1920 -1080 Z" fill="url(&quot;#SvgjsLinearGradient1152&quot;)"></path></g><defs><linearGradient x1="0.1" y1="0" x2="0" y2="1" id="SvgjsLinearGradient1150"><stop stop-color="#878787" offset="0"></stop><stop stop-color="#878787" offset="0"></stop></linearGradient><linearGradient x1="0.1" y1="0" x2="0" y2="1" id="SvgjsLinearGradient1151"><stop stop-color="#afafaf" offset="0"></stop><stop stop-color="#afafaf" offset="0.3333333333333333"></stop></linearGradient><linearGradient x1="0.1" y1="0" x2="0" y2="1" id="SvgjsLinearGradient1152"><stop stop-color="#d7d7d7" offset="0"></stop><stop stop-color="#d7d7d7" offset="0.6666666666666666"></stop></linearGradient></defs></svg>
-    <nav class="header--nav">
-        <h2 class="header--nav__title">Olivia</h2>
-        <div class="header--nav__links">
-            <a href="#main">Tienda</a>
-            <a id="aboutBtn" href="#">Sobre nosotros</a>
-        </div>
-        <div class="header--nav__user">
-            <a href="#" id="userBtn"><i class="fas fa-user"></i></a>
-            <a href="#" id="cartBtn"><i class="fas fa-shopping-cart"></i></a>
-            <a href="#" id="upBtn"><i class="fas fa-arrow-circle-up"></i></a>
-            <a href="#" id="logOut"><i class="fas fa-sign-out-alt"></i></a>
-        </div>
-    </nav>
-    <div class="header--main">
-        <h2 class="header--main__title">Bienvenido a la tienda Olivia</h2>            
-    </div>
-</header>
-<main class="main" id="main">
-    <div class="main--filters">
-        <h2 class="main--filters__title">Filtros</h2>
-        <i id="filterShow" class="fas fa-bars"></i>
-        <div class="main--filters__interactive">
-            <ul class="filtersTotal">
-                <li id='filtersRemera'>Remeras</li>
-                <li id='filtersPantalones'>Pantalones</li>
-                <li id='filtersBuzos'>Buzos</li>
-                <li id='filtersAccesorios'>Accesorios</li>
-            </ul>
-        </div>
-    </div>
-    <div class="main--items">
-        <h2 class='main--items__title'>Tienda</h2>
-    </div>
-    <div class="main--selected">
-        
-    </div>
-</main>    
-<section class="upload">
-    <div class="upload--modal">
-        <span id="closeUpload">X</span>
-        <h2 class="upload--modal__title">Subir item</h2>
-        <div class="uploadSpace">
-            <label for="uploadTitle">Ingrese el nombre del producto</label><input type="text" id="uploadTitle" placeholder="Nombre">
-        </div>
-        <div class="uploadSpace">
-            <label for="uploadPrice">Precio</label><input type="text" placeholder="Precio" id="uploadPrice">
-        </div>
-        <div class="uploadSpace">
-            <label for="uploadFilter">Selecciona una categoria:</label>
-            <select name="filters" id="uploadFilter">
-                <option value="remera">Remera</option>
-                <option value="pantalon">Pantalon</option>
-                <option value="accesorio">Accesorio</option>
-                <option value="buzo">Buzo</option>
-            </select>
-
-        </div>
-        <div class="uploadSpace">
-            <label for="uploadDesc">Descripcion</label><input type="text" name="description" placeholder="Descripcion" id="uploadDesc">
-        </div>
-        <div class="uploadSpace">
-            <label for="uploadImg">Seleccione una imagen</label>
-            <input type="file"
-            id="uploadImg" name="img"
-            accept="image/png, image/jpeg">
-        </div>
-        <div class="uploadSpace">
-            <label for="selectedSizesInd">Talles disponibles</label>
-            <div class="selectedSizes">
-                <div class="sizeSize"><input class="selectedSizesUp" type="checkbox" id="checkUp1"><label class="sizeLabel" for="sizeS">S</label></div>
-                <div class="sizeSize"><input class="selectedSizesUp" type="checkbox" id="checkUp2"><label class="sizeLabel" for="sizeM">M</label></div>
-                <div class="sizeSize"><input class="selectedSizesUp" type="checkbox" id="checkUp3"><label class="sizeLabel" for="sizeL">L</label></div>
-                <div class="sizeSize"><input class="selectedSizesUp" type="checkbox" id="checkUp4"><label class="sizeLabel" for="sizeXL">XL</label></div>
+    <header class="header">
+        <svg class="header--background" xmlns="http://www.w3.org/2000/svg" version="1.1"
+            xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" viewBox="0 0 1920 1080">
+            <rect width="1920" height="1080" fill="#878787"></rect>
+            <g
+                transform="matrix(0.9959292143521045,0.5749999999999998,-0.5749999999999998,0.9959292143521045,314.3592972816298,-542.9289646711111)">
+                <path
+                    d="M0,-1080C1.3217940841244722,-976.8173785057176,-8.551833682317397,-623.8825740721603,7.930764504746833,-460.90427103430534C24.413362691811063,-297.92596799645037,92.86683622794907,-266.5350072117999,98.89558912238539,-102.13018177287046C104.92434201682171,62.274643666059006,64.50756325285384,310.6289258589918,44.1032818713648,525.5246815992714C23.69900048987576,740.420437339551,-18.860572672646594,1003.6944654543723,-23.530099166548837,1187.2443526688073C-28.19962566045108,1370.7942398832424,12.164439713526528,1464.698063664016,16.086122907951335,1626.8240048858815C20.00780610237614,1788.949946107747,2.6810204846585557,2071.137334147647,0,2160L 1920 2160 L 1920 -1080 Z"
+                    fill="url(&quot;#SvgjsLinearGradient1150&quot;)"></path>
+                <path
+                    d="M640,-1080C640.3942573498782,-976.6515388541455,652.4456269567461,-630.9161293345518,642.365544099269,-459.909233124873C632.2854612417918,-288.90233691519427,562.4306522923214,-201.83817204586015,579.519502855137,-53.958622741927456C596.6083534179527,93.92092656200523,738.5639994145597,219.98623854408416,744.8986474761632,427.3680626987232C751.2332955377667,634.7498868533622,629.8432826612016,993.6690107769238,617.5273912247583,1190.3323221859066C605.211499788315,1386.9956335948893,667.2578640616301,1445.7366515169379,671.0032988575038,1607.34793115262C674.7487336533774,1768.9592107883022,645.1672164762506,2067.89132185877,640,2160L 1920 2160 L 1920 -1080 Z"
+                    fill="url(&quot;#SvgjsLinearGradient1151&quot;)"></path>
+                <path
+                    d="M1280,-1080C1268.2145735159424,-1021.1275075922546,1197.3820385882996,-882.3974769804171,1209.2874410956542,-726.7650455535274C1221.192843603009,-571.1326141266378,1339.7695767132468,-308.934782984401,1351.4324150441275,-146.20541143866245C1363.0952533750083,16.523960107076107,1308.1429818724077,87.68362091681564,1279.264471080939,249.61118372090385C1250.3859602894704,411.53874652499206,1176.7698709595318,677.0570220005175,1178.161350295316,825.3599653858669C1179.5528296311002,973.6629087712163,1271.8898834441782,993.461830163627,1287.6133470956447,1139.4288440330001C1303.3368107471113,1285.3958579023733,1273.7710233867224,1531.0668559409387,1272.502132204115,1701.1620486021054C1271.2332410215076,1871.2572412632721,1278.7503553673525,2083.527008100351,1280,2160L 1920 2160 L 1920 -1080 Z"
+                    fill="url(&quot;#SvgjsLinearGradient1152&quot;)"></path>
+            </g>
+            <defs>
+                <linearGradient x1="0.1" y1="0" x2="0" y2="1" id="SvgjsLinearGradient1150">
+                    <stop stop-color="#878787" offset="0"></stop>
+                    <stop stop-color="#878787" offset="0"></stop>
+                </linearGradient>
+                <linearGradient x1="0.1" y1="0" x2="0" y2="1" id="SvgjsLinearGradient1151">
+                    <stop stop-color="#afafaf" offset="0"></stop>
+                    <stop stop-color="#afafaf" offset="0.3333333333333333"></stop>
+                </linearGradient>
+                <linearGradient x1="0.1" y1="0" x2="0" y2="1" id="SvgjsLinearGradient1152">
+                    <stop stop-color="#d7d7d7" offset="0"></stop>
+                    <stop stop-color="#d7d7d7" offset="0.6666666666666666"></stop>
+                </linearGradient>
+            </defs>
+        </svg>
+        <nav class="header--nav">
+            <h2 class="header--nav__title">Olivia</h2>
+            <div class="header--nav__links">
+                <a href="#main">Tienda</a>
+                <a id="aboutBtn" href="#">Sobre nosotros</a>
             </div>
+            <div class="header--nav__user">
+                <a href="#" id="userBtn"><i class="fas fa-user"></i></a>
+                <a href="#" id="cartBtn"><i class="fas fa-shopping-cart"></i></a>
+                <a href="#" id="upBtn"><i class="fas fa-arrow-circle-up"></i></a>
+                <a href="#" id="logOut"><i class="fas fa-sign-out-alt"></i></a>
+            </div>
+        </nav>
+        <div class="header--main">
+            <h2 class="header--main__title">Bienvenido a la tienda Olivia</h2>
         </div>
-
-        <div class="uploadSpace">
-            <label for="uploadProx">Proximamente?</label>
-            <input type="checkbox" name="proximamente" id="uploadProx">
-        </div>
-        <input type="button" value="Publicar producto" id="uploadItem">
-    </div>
-</section>
-<section class="about">
-    <div class="about--modal">
-        <span class="about--modal__close">X</span>
-        <h2 class="about--title">Sobre nosotros</h2>
-        <div class="about--info">
-            <div class="about--info__text">
-                <h2>¿Quienes somos?</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit laborum nam provident, doloribus tenetur eaque cum autem quis fuga iste aliquam temporibus impedit ullam hic sunt itaque, quaerat quae blanditiis? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veniam dicta ex praesentium modi debitis, perferendis obcaecati sed quod ipsa provident quisquam aliquam voluptates eaque voluptatum possimus, voluptate laudantium, maxime tempore.</p>
-            </div>
-            <img src="images/about.jpg" alt="about us">
-        </div>
-    </div>
-</section>
-<section class="login">
-    <div class="login--modal">
-        <span class="closeLogin">X</span>
-        <form class="login--modal__form" action="submit">
-            <span>Bienvenido</span>
-            <div class="iconInput">
-              <i class="far fa-envelope"></i>
-              <input class="textInput" autocomplete="off" type="email" placeholder="Mail" id="usrInput">
-            </div>
-            <div class="iconInput">
-              <i class="fas fa-key"></i>
-              <input class="textInput" autocomplete="off" type="password" placeholder="Contraseña" id="pswInput">
-            </div>
-            <input type="button" value='Log in' id="logBtn">
-            <div class="formLinks">
-                <a href="" class="forgotPw">¿Olvidaste tu contraseña?</a>
-                <span class="regText">¿No tenes cuenta? <a href="" id="regLink">Registrarse</a></span>
-                <hr>
-                <span class="regText">O ingresa con:</span>
-                <div class="formSocial">
-                    <a id="googleLogin" href="#"><i class="fab fa-google"></i></a>
-                </div>
-            </div>
-        </form>
-        <form class="login--modal__register" action="submit ">
-              <span>Registrarse</span>
-              <div class="iconInput">
-                <i class="far fa-envelope"></i>
-                <input class="textInput" autocomplete="off" type="email" placeholder="Mail" id="usrRegInput">
-              </div>
-              <div class="iconInput">
-                <i class="fas fa-key"></i>
-                <input class="textInput" autocomplete="off" type="password" placeholder="Contraseña" id="pswRegInput">
-              </div>
-              <div class="iconInput">
-                <i class="fas fa-key"></i>
-                <input class="textInput" autocomplete="off" type="password" placeholder="Repita la contraseña" id="pswRegSecInput">
-              </div>
-              <input type="button" value='Registrarse' id="regBtn">
-        </form>
-    </div>
-</section>
-<section class="cart">
-    <div class="cart--modal">
-        <span class="cart--modal__close">X</span>
-        <div class="cart--modal__items"></div>
-        <div class="cart--modal__confirm">
-            <div class="confirmSpace">
-                <span>Usted esta a punto de confirmar su compra, se le enviara un mail con la informacion de pago.
-                    Una vez realizado el pago coordinaremos la entrega, nuestros medios de entraga son los siguientes:
-                </span>
-                <ul>
-                    <li>Correo argentino</li>
-                    <li>Entrega en punto de encuentro</li>
+    </header>
+    <main class="main" id="main">
+        <div class="main--filters">
+            <h2 class="main--filters__title">Filtros</h2>
+            <i id="filterShow" class="fas fa-bars"></i>
+            <div class="main--filters__interactive">
+                <ul class="filtersTotal">
+                    <li id='filtersRemera'>Remeras</li>
+                    <li id='filtersPantalones'>Pantalones</li>
+                    <li id='filtersBuzos'>Buzos</li>
+                    <li id='filtersAccesorios'>Accesorios</li>
                 </ul>
             </div>
-            <div class="confirmSpace">
-                <label for="confirmAdress">Agregue su direccion</label>
-                <input id="confirmAdress" type="text" placeholder="Direccion">
-            </div>
-            <div class="confirmSpace">
-                <label for="confirmInfo">Agregue informacion adicional</label>
-                <input id="confirmInfo" type="text" placeholder="Informacion Adicional">
-            </div>
         </div>
-        <div class="cart--modal__btns">
-            <input id="eraseCart" type="button" value="Borrar Todo">
-            <input id="buyCart" type="button" value='Comprar'>
-            <input id="confirmCart" type="button" value='Confirmar Compra'>
+        <div class="main--items">
+            <h2 class='main--items__title'>Tienda</h2>
         </div>
-    </div>
-</section>
-<footer class="footer">
+        <div class="main--selected">
 
-    <div class="footer--info">
-        <p>Nos pueden encontrar en:</p> 
-        <p><i class="fas fa-search-location"></i>Segurola y Habana 4310</p>
-        <p><i class="far fa-clock"></i>Lunes a Viernes de 9 a las 18hs</p>
-    </div>
-    <div class="footer--links">
-        <ul>
-            <li><a href="#"><i class="fab fa-facebook-f"></i>Facebook</a></li>
-            <li><a href="#"><i class="fab fa-instagram"></i>Instagram</a></li>
-            <li><a href="#"><i class="fab fa-whatsapp"></i>12345678</a></li>
-        </ul>
-    </div>
-</footer>
-<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
-<script src="main.js"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://kit.fontawesome.com/6d0905dba6.js" crossorigin="anonymous"></script>    
+        </div>
+    </main>
+    <section class="upload">
+        <div class="upload--modal">
+            <span id="closeUpload">X</span>
+            <h2 class="upload--modal__title">Subir item</h2>
+            <div class="uploadSpace">
+                <label for="uploadTitle">Ingrese el nombre del producto</label><input type="text" id="uploadTitle"
+                    placeholder="Nombre">
+            </div>
+            <div class="uploadSpace">
+                <label for="uploadPrice">Precio</label><input type="text" placeholder="Precio" id="uploadPrice">
+            </div>
+            <div class="uploadSpace">
+                <label for="uploadFilter">Selecciona una categoria:</label>
+                <select name="filters" id="uploadFilter">
+                    <option value="remera">Remera</option>
+                    <option value="pantalon">Pantalon</option>
+                    <option value="accesorio">Accesorio</option>
+                    <option value="buzo">Buzo</option>
+                </select>
+
+            </div>
+            <div class="uploadSpace">
+                <label for="uploadDesc">Descripcion</label><input type="text" name="description"
+                    placeholder="Descripcion" id="uploadDesc">
+            </div>
+            <div class="uploadSpace">
+                <label for="uploadImg">Seleccione una imagen</label>
+                <input type="file" id="uploadImg" name="img" onclick="chooseFile(event)">
+            </div>
+            <div class="uploadSpace">
+                <label for="selectedSizesInd">Talles disponibles</label>
+                <div class="selectedSizes">
+                    <div class="sizeSize"><input class="selectedSizesUp" type="checkbox" id="checkUp1"><label
+                            class="sizeLabel" for="sizeS">S</label></div>
+                    <div class="sizeSize"><input class="selectedSizesUp" type="checkbox" id="checkUp2"><label
+                            class="sizeLabel" for="sizeM">M</label></div>
+                    <div class="sizeSize"><input class="selectedSizesUp" type="checkbox" id="checkUp3"><label
+                            class="sizeLabel" for="sizeL">L</label></div>
+                    <div class="sizeSize"><input class="selectedSizesUp" type="checkbox" id="checkUp4"><label
+                            class="sizeLabel" for="sizeXL">XL</label></div>
+                </div>
+            </div>
+
+            <div class="uploadSpace">
+                <label for="uploadProx">Proximamente?</label>
+                <input type="checkbox" name="proximamente" id="uploadProx">
+            </div>
+            <input type="button" value="Publicar producto" id="uploadItem">
+        </div>
+    </section>
+    <section class="about">
+        <div class="about--modal">
+            <span class="about--modal__close">X</span>
+            <h2 class="about--title">Sobre nosotros</h2>
+            <div class="about--info">
+                <div class="about--info__text">
+                    <h2>¿Quienes somos?</h2>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit laborum nam provident, doloribus
+                        tenetur eaque cum autem quis fuga iste aliquam temporibus impedit ullam hic sunt itaque, quaerat
+                        quae blanditiis? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veniam dicta ex
+                        praesentium modi debitis, perferendis obcaecati sed quod ipsa provident quisquam aliquam
+                        voluptates eaque voluptatum possimus, voluptate laudantium, maxime tempore.</p>
+                </div>
+                <img src="images/about.jpg" alt="about us">
+            </div>
+        </div>
+    </section>
+    <section class="login">
+        <div class="login--modal">
+            <span class="closeLogin">X</span>
+            <form class="login--modal__form" action="submit">
+                <span>Bienvenido</span>
+                <div class="iconInput">
+                    <i class="far fa-envelope"></i>
+                    <input class="textInput" autocomplete="off" type="email" placeholder="Mail" id="usrInput">
+                </div>
+                <div class="iconInput">
+                    <i class="fas fa-key"></i>
+                    <input class="textInput" autocomplete="off" type="password" placeholder="Contraseña" id="pswInput">
+                </div>
+                <input type="button" value='Log in' id="logBtn">
+                <div class="formLinks">
+                    <a href="" class="forgotPw">¿Olvidaste tu contraseña?</a>
+                    <span class="regText">¿No tenes cuenta? <a href="" id="regLink">Registrarse</a></span>
+                    <hr>
+                    <span class="regText">O ingresa con:</span>
+                    <div class="formSocial">
+                        <a id="googleLogin" href="#"><i class="fab fa-google"></i></a>
+                    </div>
+                </div>
+            </form>
+            <form class="login--modal__register" action="submit ">
+                <span>Registrarse</span>
+                <div class="iconInput">
+                    <i class="far fa-envelope"></i>
+                    <input class="textInput" autocomplete="off" type="email" placeholder="Mail" id="usrRegInput">
+                </div>
+                <div class="iconInput">
+                    <i class="fas fa-key"></i>
+                    <input class="textInput" autocomplete="off" type="password" placeholder="Contraseña"
+                        id="pswRegInput">
+                </div>
+                <div class="iconInput">
+                    <i class="fas fa-key"></i>
+                    <input class="textInput" autocomplete="off" type="password" placeholder="Repita la contraseña"
+                        id="pswRegSecInput">
+                </div>
+                <input type="button" value='Registrarse' id="regBtn">
+            </form>
+        </div>
+    </section>
+    <section class="cart">
+        <div class="cart--modal">
+            <span class="cart--modal__close">X</span>
+            <div class="cart--modal__items"></div>
+            <div class="cart--modal__confirm">
+                <div class="confirmSpace">
+                    <span>Usted esta a punto de confirmar su compra, se le enviara un mail con la informacion de pago.
+                        Una vez realizado el pago coordinaremos la entrega, nuestros medios de entraga son los
+                        siguientes:
+                    </span>
+                    <ul>
+                        <li>Correo argentino</li>
+                        <li>Entrega en punto de encuentro</li>
+                    </ul>
+                </div>
+                <div class="confirmSpace">
+                    <label for="confirmAdress">Agregue su direccion</label>
+                    <input id="confirmAdress" type="text" placeholder="Direccion">
+                </div>
+                <div class="confirmSpace">
+                    <label for="confirmInfo">Agregue informacion adicional</label>
+                    <input id="confirmInfo" type="text" placeholder="Informacion Adicional">
+                </div>
+            </div>
+            <div class="cart--modal__btns">
+                <input id="eraseCart" type="button" value="Borrar Todo">
+                <input id="buyCart" type="button" value='Comprar'>
+                <input id="confirmCart" type="button" value='Confirmar Compra'>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+
+        <div class="footer--info">
+            <p>Nos pueden encontrar en:</p>
+            <p><i class="fas fa-search-location"></i>Segurola y Habana 4310</p>
+            <p><i class="far fa-clock"></i>Lunes a Viernes de 9 a las 18hs</p>
+        </div>
+        <div class="footer--links">
+            <ul>
+                <li><a href="#"><i class="fab fa-facebook-f"></i>Facebook</a></li>
+                <li><a href="#"><i class="fab fa-instagram"></i>Instagram</a></li>
+                <li><a href="#"><i class="fab fa-whatsapp"></i>12345678</a></li>
+            </ul>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="main.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/6d0905dba6.js" crossorigin="anonymous"></script>
 </body>
+
 </html>

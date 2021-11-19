@@ -48,6 +48,8 @@ let filtersPantalones = document.querySelector("#filtersPantalones");
 let filtersBuzos = document.querySelector("#filtersBuzos");
 let filterShow = document.querySelector("#filterShow");
 let filterInteractive = document.querySelector(".main--filters__interactive");
+let cartList = document.querySelector("#cartList");
+let uploadImg = document.querySelector("#uploadImg");
 /*FIREBASE*/
 const firebaseConfig = {
   apiKey: "AIzaSyDAVV4ueZcAmwHXAimaDlRwp-0DN2ETSio",
@@ -61,6 +63,7 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 var provider = new firebase.auth.GoogleAuthProvider();
 var db = firebase.firestore();
+var storage = firebase.storage();
 
 /*CLOSE ABOUT MODAL*/
 closeAbout.addEventListener("click", (e) => {
@@ -312,6 +315,26 @@ firebase.auth().onAuthStateChanged((user) => {
                   }, 500);
                 });
               }
+              let cardImg = document.getElementsByClassName("cardImg");
+              async function firstFunction(data, el) {
+                firebase
+                  .storage()
+                  .ref(`images/${data}.jpg`)
+                  .getDownloadURL()
+                  .then((imgUrl) => {
+                    console.log(imgUrl);
+                    el.src = imgUrl;
+                  });
+                return;
+              }
+              async function secondFunction(cardImg) {
+                for (el of cardImg) {
+                  let parent = el.parentNode;
+                  let data = parent.getAttribute("data-cont");
+                  await firstFunction(data, el);
+                }
+              }
+              secondFunction(cardImg);
             }, 600)
           );
 
@@ -402,6 +425,12 @@ firebase.auth().onAuthStateChanged((user) => {
           /*CONFIRM BUY*/
           confirmCart.addEventListener("click", () => {
             cartModal.style.opacity = 0;
+            let cartArray = [];
+            for (el of cart) {
+              let cartDestruct = { nombre: el.title, talle: el.size };
+              cartArray = [cartDestruct, ...cartArray];
+              console.log(cartDestruct);
+            }
             itemsCart.innerHTML = "";
             console.log("confirmado");
             confirmCart.style.display = "none";
@@ -409,12 +438,19 @@ firebase.auth().onAuthStateChanged((user) => {
             buyCart.style.display = "block";
             let adress = confirmAdress.value;
             let extraInfo = confirmInfo.value;
+            let cartListConfirm = JSON.stringify(cartArray);
+            console.log(cartListConfirm);
             const cartFinal = {
               mail: userMail,
               cart: cart,
               adress: adress,
               info: extraInfo,
             };
+            emailjs.send("service_luhjjd8", "template_jikmv19", {
+              from_name: userMail,
+              to_name: "Hola Boutique Olivia",
+              message: `Te realizaron una compra de los siguientes items: ${cartListConfirm}, la direccion de compra es: ${cartFinal.adress} y brindo la siguiente informacion:${cartFinal.info}`,
+            });
             console.log(cartFinal);
             setTimeout(() => {
               confirmAdress.value = "";
@@ -663,6 +699,13 @@ closeUpload.addEventListener("click", () => {
   }, 500);
 });
 
+let file = {};
+const chooseFile = (e) => {
+  setInterval(() => {
+    file = e.target.files[0];
+  }, 500);
+};
+
 /*UPLOAD ITEM*/
 uploadItem.addEventListener("click", () => {
   uploadModal.style.opacity = 0;
@@ -675,6 +718,8 @@ uploadItem.addEventListener("click", () => {
   let sizeM = checkUp2.checked;
   let sizeL = checkUp3.checked;
   let sizeXL = checkUp4.checked;
+  let imgNumber = totalItems;
+
   db.collection("items")
     .doc()
     .set({
@@ -682,6 +727,7 @@ uploadItem.addEventListener("click", () => {
       price: price,
       prox: prox,
       desc: desc,
+      imgNumber: imgNumber,
       filter: filter,
       size: {
         s: sizeS,
@@ -691,7 +737,7 @@ uploadItem.addEventListener("click", () => {
       },
     })
     .then(() => {
-      console.log("Document successfully written!");
+      console.log("Document successfully written!", doc);
     })
     .catch((error) => {
       console.error("Error writing document: ", error);
@@ -714,10 +760,26 @@ uploadItem.addEventListener("click", () => {
       showConfirmButton: false,
       timer: 1500,
     });
-  }, 1500);
+    console.log(imgNumber);
+    firebase
+      .storage()
+      .ref("images/" + imgNumber + ".jpg")
+      .put(file)
+      .then(() => {
+        console.log("subido");
+        imgNumber++;
+        console.log(imgNumber);
+        db.collection("global").doc("itemsTotal").update({
+          cont: imgNumber,
+        });
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+  }, 1000);
   setTimeout(function () {
     location.reload();
-  }, 2500);
+  }, 3500);
 });
 
 /*FUNCTIONS*/
@@ -742,22 +804,32 @@ const resetModal = () => {
   }, 500);
 };
 
+let totalItems, itemData, imgData;
 const loadDB = () => {
+  let totalRef = db.collection("global").doc("itemsTotal");
+  totalRef.get("itemsTotal").then((doc) => {
+    if (doc.exists) {
+      let result = doc.data();
+      totalItems = result.cont;
+      console.log(totalItems);
+    } else {
+    }
+  });
   db.collection("items")
     .get()
     .then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        let itemData = doc.data();
+        itemData = doc.data();
         if (itemData.prox == false) {
-          mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
-                              <img class="cardImg" src="images/about.jpg" alt="">
+          mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}' data-cont='${itemData.imgNumber}'>
+                              <img class="cardImg" id='card${itemData.imgNumber}' src="" alt="">
                               <h2>${itemData.title}</h2>
                               <h3>$${itemData.price}</h3>
                               <span class="itemBtn">Ver mas...</span>
                               </article>`;
         } else {
           mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
-                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <img class="cardImg" src="" alt="">
                               <h2>${itemData.title}</h2>
                               <h3>$${itemData.price}</h3>
                               <span class="itemBtn">Ver mas...</span>
@@ -803,3 +875,5 @@ const callPromise = new Promise((resolve, reject) => {
     resolve(loadDB());
   }, 500);
 });
+
+emailjs.init("user_v6Q5mziNqkCnc3fmpewA1");
