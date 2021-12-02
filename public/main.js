@@ -46,19 +46,45 @@ let filtersAccesorios = document.querySelector("#filtersAccesorios");
 let filtersRemera = document.querySelector("#filtersRemera");
 let filtersPantalones = document.querySelector("#filtersPantalones");
 let filtersBuzos = document.querySelector("#filtersBuzos");
+let filtersRemerones = document.querySelector("#filtersRemerones");
+let filtersBlusasCamisas = document.querySelector("#filtersBlusasCamisas");
+let filtersKimonos = document.querySelector("#filtersKimonos");
+let filtersPolleras = document.querySelector("#filtersPolleras");
+let filtersVestidos = document.querySelector("#filtersVestidos");
+let filtersShorts = document.querySelector("#filtersShorts");
+let filtersSweaters = document.querySelector("#filtersSweaters");
+let filtersBlazers = document.querySelector("#filtersBlazers");
+let filtersMusculosas = document.querySelector("#filtersMusculosas");
+let filtersMangaCorta = document.querySelector("#filtersMangaCorta");
+let filtersMangaLarga = document.querySelector("#filtersMangaLarga");
+let filtersJeans = document.querySelector("#filtersJeans");
+let filtersBengalina = document.querySelector("#filtersBengalina");
+let filtersLino = document.querySelector("#filtersLino");
+let filtersEngomado = document.querySelector("#filtersEngomado");
+let filtersCartBill = document.querySelector("#filtersCartBill");
+let filtersPañuelos = document.querySelector("#filtersPañuelos");
+let filtersRelojes = document.querySelector("#filtersRelojes");
 let filterShow = document.querySelector("#filterShow");
 let filterInteractive = document.querySelector(".main--filters__interactive");
 let cartList = document.querySelector("#cartList");
 let uploadImg = document.querySelector("#uploadImg");
+let moreRemeras = document.querySelector("#moreRemeras");
+let morePantalones = document.querySelector("#morePantalones");
+let moreAccesorios = document.querySelector("#moreAccesorios");
+let moreFiltersSpace = document.querySelector("#moreFiltersSpace");
+let uploadConfirm = document.querySelector("#uploadConfirm");
+let moreFiltersPantalones = document.querySelector("#moreFiltersPantalones");
+let moreFiltersRemera = document.querySelector("#moreFiltersRemera");
+let moreFiltersAccesorios = document.querySelector("#moreFiltersAccesorios");
 /*FIREBASE*/
 const firebaseConfig = {
-  apiKey: "AIzaSyDAVV4ueZcAmwHXAimaDlRwp-0DN2ETSio",
-  authDomain: "tiendaolivia-608da.firebaseapp.com",
-  projectId: "tiendaolivia-608da",
-  storageBucket: "tiendaolivia-608da.appspot.com",
-  messagingSenderId: "632038399033",
-  appId: "1:632038399033:web:a602f377230894867d01e8",
-  measurementId: "G-M1ZD8N9R47",
+  apiKey: "AIzaSyDjDNZ12w_IzxHrylZX7W-eMq0fS0LbKGs",
+  authDomain: "oliviaspboutique-81509.firebaseapp.com",
+  projectId: "oliviaspboutique-81509",
+  storageBucket: "oliviaspboutique-81509.appspot.com",
+  messagingSenderId: "321117996647",
+  appId: "1:321117996647:web:055372d0c00d1ae06e76c2",
+  measurementId: "G-Q08M39RZ57",
 };
 firebase.initializeApp(firebaseConfig);
 var provider = new firebase.auth.GoogleAuthProvider();
@@ -217,9 +243,9 @@ firebase.auth().onAuthStateChanged((user) => {
                     .then((doc) => {
                       if (doc.exists) {
                         let item = doc.data();
-                        itemModal.innerHTML = `<div class="main--selected__modal">
+                        itemModal.innerHTML = `<div class="main--selected__modal" data-id='${doc.id}'>
                                               <span class="selectedClose">X</span>
-                                              <img class="selectedImg" src="images/about.jpg" alt="">
+                                              <img class="selectedImg" src="images/loading.gif" alt="" id='${item.imgNumber}'>
                                               <div class="selectedInfo" data-id='${doc.id}'>
                                                   <h1 class="selectedTitle">${item.title}</h1>
                                                   <h2 class="selectedPrice">$${item.price}</h2>
@@ -233,6 +259,23 @@ firebase.auth().onAuthStateChanged((user) => {
                                                   <input  class="selectedBuy" type="button" value="Añadir al carrito">   
                                               </div>
                                           </div>`;
+                        /*LOAD IMG*/
+                        let cardImg = document.getElementById(item.imgNumber);
+                        async function firstFunctionModal(dataModal, cardImg) {
+                          firebase
+                            .storage()
+                            .ref(`images/${dataModal}.jpg`)
+                            .getDownloadURL()
+                            .then((imgUrl) => {
+                              cardImg.src = imgUrl;
+                            });
+                          return;
+                        }
+                        async function secondFunctionModal(cardImg) {
+                          let dataModal = parent.getAttribute("data-cont");
+                          await firstFunctionModal(dataModal, cardImg);
+                        }
+                        secondFunctionModal(cardImg);
                         /*CLOSES SELECTED ITEM MODAL*/
                         let sizesBtns =
                           document.getElementsByClassName("selectedSizesInd");
@@ -274,7 +317,6 @@ firebase.auth().onAuthStateChanged((user) => {
                             id: id,
                           };
                           cart = [...cart, product];
-                          console.log(cart);
                           /*UPDATING CART*/
                           docRef
                             .update({
@@ -322,7 +364,6 @@ firebase.auth().onAuthStateChanged((user) => {
                   .ref(`images/${data}.jpg`)
                   .getDownloadURL()
                   .then((imgUrl) => {
-                    console.log(imgUrl);
                     el.src = imgUrl;
                   });
                 return;
@@ -342,7 +383,6 @@ firebase.auth().onAuthStateChanged((user) => {
           let cart = userCart;
           cartBtn.addEventListener("click", (e) => {
             e.preventDefault();
-            console.log(cart);
             itemsCart.innerHTML = "";
             cartModal.style.display = "flex";
             if (cart.length == 0) {
@@ -360,8 +400,6 @@ firebase.auth().onAuthStateChanged((user) => {
                   let parent = child.parentNode;
                   let data = parent.getAttribute("data-id");
                   let cartRef = db.collection("users").doc(user.uid);
-                  console.log(data);
-                  console.log(cart);
                   for (el of cart) {
                     if (el.id == data) {
                       let deleting = cart.indexOf(el);
@@ -407,6 +445,7 @@ firebase.auth().onAuthStateChanged((user) => {
           });
           /*DELETE EVERYTING FROM CART*/
           eraseCart.addEventListener("click", () => {
+            cart = "";
             deleteCart(docRef);
           });
           /*FIRST BUY CART ACCTION*/
@@ -416,7 +455,6 @@ firebase.auth().onAuthStateChanged((user) => {
             confirmCart.style.display = "block";
             eraseCart.style.display = "none";
             buyCart.style.display = "none";
-            console.log("vamos a confirmar ahora");
             setTimeout(() => {
               itemsCart.style.display = "none";
               confirmModal.style.opacity = 1;
@@ -429,29 +467,32 @@ firebase.auth().onAuthStateChanged((user) => {
             for (el of cart) {
               let cartDestruct = { nombre: el.title, talle: el.size };
               cartArray = [cartDestruct, ...cartArray];
-              console.log(cartDestruct);
             }
             itemsCart.innerHTML = "";
-            console.log("confirmado");
             confirmCart.style.display = "none";
             eraseCart.style.display = "block";
             buyCart.style.display = "block";
             let adress = confirmAdress.value;
             let extraInfo = confirmInfo.value;
             let cartListConfirm = JSON.stringify(cartArray);
-            console.log(cartListConfirm);
             const cartFinal = {
               mail: userMail,
               cart: cart,
               adress: adress,
               info: extraInfo,
             };
-            emailjs.send("service_luhjjd8", "template_jikmv19", {
+            emailjs.send("service_ry0gdf8", "template_8rhmv4c", {
               from_name: userMail,
               to_name: "Hola Boutique Olivia",
               message: `Te realizaron una compra de los siguientes items: ${cartListConfirm}, la direccion de compra es: ${cartFinal.adress} y brindo la siguiente informacion:${cartFinal.info}`,
             });
-            console.log(cartFinal);
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Enviado! Nos pondremos en contacto a la brevedad",
+              showConfirmButton: false,
+              timer: 3000,
+            });
             setTimeout(() => {
               confirmAdress.value = "";
               confirmInfo.value = "";
@@ -491,18 +532,27 @@ firebase.auth().onAuthStateChanged((user) => {
     cartBtn.style.display = "block";
     logOut.style.display = "none";
     upBtn.style.display = "none";
-    cartBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      loginModal.style.display = "flex";
-      setTimeout(function () {
-        loginModal.style.opacity = 1;
-      }, 500);
-    });
+    setTimeout(() => {
+      let itemBtns = document.getElementsByClassName("itemBtn");
+      for (el of itemBtns) {
+        el.addEventListener("click", () => {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Inicie sesion para comprar",
+            showConfirmButton: false,
+            timer: 5000,
+          });
+        });
+      }
+    }, 3000);
   }
 });
+
+var filterRef = db.collection("items");
 /*FILTERS ACCS*/
 filtersAccesorios.addEventListener("click", () => {
-  let filterRef = db.collection("items");
+  moreAccesorios.style.display = "block";
   let reference = filterRef.where("filter", "==", "accesorio");
   reference
     .get()
@@ -539,7 +589,7 @@ filtersAccesorios.addEventListener("click", () => {
 });
 /*FILTERS PANTS*/
 filtersPantalones.addEventListener("click", () => {
-  let filterRef = db.collection("items");
+  morePantalones.style.display = "block";
   let reference = filterRef.where("filter", "==", "pantalon");
   reference
     .get()
@@ -576,7 +626,7 @@ filtersPantalones.addEventListener("click", () => {
 });
 /*FILTERS TSHIRTS*/
 filtersRemera.addEventListener("click", () => {
-  let filterRef = db.collection("items");
+  moreRemeras.style.display = "block";
   let reference = filterRef.where("filter", "==", "remera");
   reference
     .get()
@@ -611,10 +661,621 @@ filtersRemera.addEventListener("click", () => {
       console.log("Error getting documents:", error);
     });
 });
-/*FILTERS HOODIES*/
-filtersBuzos.addEventListener("click", () => {
-  let filterRef = db.collection("items");
-  let reference = filterRef.where("filter", "==", "buzo");
+/*FILTERS REMERONES*/
+filtersRemerones.addEventListener("click", () => {
+  let reference = filterRef.where("filter", "==", "remeron");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS BLUSAS Y CAMISAS*/
+filtersBlusasCamisas.addEventListener("click", () => {
+  let reference = filterRef.where("filter", "==", "blusacamisa");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS KIMONOS*/
+filtersKimonos.addEventListener("click", () => {
+  let reference = filterRef.where("filter", "==", "kimono");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS POLLERAS*/
+filtersPolleras.addEventListener("click", () => {
+  let reference = filterRef.where("filter", "==", "pollera");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS VESTIDOS*/
+filtersVestidos.addEventListener("click", () => {
+  let reference = filterRef.where("filter", "==", "vestido");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS SHORTS*/
+filtersShorts.addEventListener("click", () => {
+  let reference = filterRef.where("filter", "==", "short");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS SWEATER*/
+filtersSweaters.addEventListener("click", () => {
+  let reference = filterRef.where("filter", "==", "sweater");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS BLAZERS*/
+filtersBlazers.addEventListener("click", () => {
+  let reference = filterRef.where("filter", "==", "blazer");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS MUSCULOSAS*/
+filtersMusculosas.addEventListener("click", () => {
+  let reference = filterRef.where("extraFilter", "==", "musculosa");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS MANGA CORTA*/
+filtersMangaCorta.addEventListener("click", () => {
+  let reference = filterRef.where("extraFilter", "==", "mangacorta");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS MANGA LARGA*/
+filtersMangaLarga.addEventListener("click", () => {
+  let reference = filterRef.where("extraFilter", "==", "mangalarga");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS JEAN*/
+filtersJeans.addEventListener("click", () => {
+  let reference = filterRef.where("extraFilter", "==", "jean");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS BENGALINA*/
+filtersBengalina.addEventListener("click", () => {
+  let reference = filterRef.where("extraFilter", "==", "bengalina");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS LINO*/
+filtersLino.addEventListener("click", () => {
+  let reference = filterRef.where("extraFilter", "==", "lino");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS ENGOMADO*/
+filtersEngomado.addEventListener("click", () => {
+  let reference = filterRef.where("extraFilter", "==", "engomado");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS CARTERA Y BILLETERA*/
+filtersCartBill.addEventListener("click", () => {
+  let reference = filterRef.where("extraFilter", "==", "cartbill");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS PAÑUELOS*/
+filtersPañuelos.addEventListener("click", () => {
+  let reference = filterRef.where("extraFilter", "==", "pañuelo");
+  reference
+    .get()
+    .then(function (results) {
+      if (results.empty) {
+        mainItems.innerHTML = "<h1>NO HAY ITEMS</h1>";
+      } else {
+        mainItems.innerHTML = "";
+        // go through all results
+        results.forEach(function (doc) {
+          let itemData = doc.data();
+          if (itemData.prox == false) {
+            mainItems.innerHTML += `<article class="main--items__card" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              </article>`;
+          } else {
+            mainItems.innerHTML += `<article class="main--items__cardDisabled" data-id='${doc.id}'>
+                              <img class="cardImg" src="images/about.jpg" alt="">
+                              <h2>${itemData.title}</h2>
+                              <h3>$${itemData.price}</h3>
+                              <span class="itemBtn">Ver mas...</span>
+                              <span class='proxAlert'> PROXIMAMENTE </span>
+                              </article>`;
+          }
+        });
+      }
+    })
+    .catch(function (error) {
+      console.log("Error getting documents:", error);
+    });
+});
+/*FILTERS RELOJ*/
+filtersRelojes.addEventListener("click", () => {
+  let reference = filterRef.where("extraFilter", "==", "reloj");
   reference
     .get()
     .then(function (results) {
@@ -650,7 +1311,6 @@ filtersBuzos.addEventListener("click", () => {
 });
 /*EXPAND FILTERS MOBILE*/
 filterShow.addEventListener("click", () => {
-  console.log("object");
   filterInteractive.style.display = "flex";
   setTimeout(() => {
     filterInteractive.style.opacity = 1;
@@ -708,7 +1368,6 @@ const chooseFile = (e) => {
 
 /*UPLOAD ITEM*/
 uploadItem.addEventListener("click", () => {
-  uploadModal.style.opacity = 0;
   let title = uploadTitle.value;
   let price = uploadPrice.value;
   let desc = uploadDesc.value;
@@ -719,16 +1378,15 @@ uploadItem.addEventListener("click", () => {
   let sizeL = checkUp3.checked;
   let sizeXL = checkUp4.checked;
   let imgNumber = totalItems;
-
   db.collection("items")
-    .doc()
-    .set({
+    .add({
       title: title,
       price: price,
       prox: prox,
       desc: desc,
       imgNumber: imgNumber,
       filter: filter,
+      extraFilter: "",
       size: {
         s: sizeS,
         m: sizeM,
@@ -736,50 +1394,149 @@ uploadItem.addEventListener("click", () => {
         xl: sizeXL,
       },
     })
-    .then(() => {
-      console.log("Document successfully written!", doc);
+    .then((docRef) => {
+      let data = docRef.id;
+      if (filter == "pantalon") {
+        let uploadSpace = document.getElementsByClassName("uploadSpace");
+        for (el of uploadSpace) {
+          el.style.display = "none";
+        }
+        moreFiltersSpace.style.display = "flex";
+        uploadItem.style.display = "none";
+        uploadConfirm.style.display = "block";
+        moreFiltersPantalones.style.display = "block";
+        uploadConfirm.addEventListener("click", () => {
+          let confirmFilter = moreFiltersPantalones.value;
+          db.collection("items")
+            .doc(data)
+            .update({
+              extraFilter: confirmFilter,
+            })
+            .then(() => {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Producto subido",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              setTimeout(function () {
+                location.reload();
+              }, 3500);
+            })
+            .catch((error) => {
+              // The document probably doesn't exist.
+              console.error("Error updating document: ", error);
+            });
+        });
+      } else if (filter == "accesorio") {
+        let uploadSpace = document.getElementsByClassName("uploadSpace");
+        for (el of uploadSpace) {
+          el.style.display = "none";
+        }
+        moreFiltersSpace.style.display = "flex";
+        uploadItem.style.display = "none";
+        uploadConfirm.style.display = "block";
+        moreFiltersAccesorios.style.display = "block";
+        uploadConfirm.addEventListener("click", () => {
+          let confirmFilter = moreFiltersAccesorios.value;
+          db.collection("items")
+            .doc(data)
+            .update({
+              extraFilter: confirmFilter,
+            })
+            .then(() => {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Producto subido",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              setTimeout(function () {
+                location.reload();
+              }, 3500);
+            })
+            .catch((error) => {
+              // The document probably doesn't exist.
+              console.error("Error updating document: ", error);
+            });
+        });
+      } else if (filter == "remera") {
+        let uploadSpace = document.getElementsByClassName("uploadSpace");
+        for (el of uploadSpace) {
+          el.style.display = "none";
+        }
+        moreFiltersSpace.style.display = "flex";
+        uploadItem.style.display = "none";
+        uploadConfirm.style.display = "block";
+        moreFiltersRemera.style.display = "block";
+        uploadConfirm.addEventListener("click", () => {
+          let confirmFilter = moreFiltersRemera.value;
+          db.collection("items")
+            .doc(data)
+            .update({
+              extraFilter: confirmFilter,
+            })
+            .then(() => {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Producto subido",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+              setTimeout(function () {
+                location.reload();
+              }, 3500);
+            })
+            .catch((error) => {
+              // The document probably doesn't exist.
+              console.error("Error updating document: ", error);
+            });
+        });
+      } else {
+        uploadModal.style.opacity = 0;
+        setTimeout(function () {
+          mainItems.innerHTML = "";
+          uploadTitle.value = "";
+          uploadPrice.value = "";
+          uploadProx.checked = false;
+          checkUp1.checked = false;
+          checkUp2.checked = false;
+          checkUp3.checked = false;
+          checkUp4.checked = false;
+          uploadModal.style.display = "none";
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Producto subido",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }, 1000);
+        setTimeout(function () {
+          location.reload();
+        }, 3500);
+      }
     })
     .catch((error) => {
       console.error("Error writing document: ", error);
     });
-
-  setTimeout(function () {
-    mainItems.innerHTML = "";
-    uploadTitle.value = "";
-    uploadPrice.value = "";
-    uploadProx.checked = false;
-    checkUp1.checked = false;
-    checkUp2.checked = false;
-    checkUp3.checked = false;
-    checkUp4.checked = false;
-    uploadModal.style.display = "none";
-    Swal.fire({
-      position: "top-end",
-      icon: "success",
-      title: "Producto subido",
-      showConfirmButton: false,
-      timer: 1500,
-    });
-    console.log(imgNumber);
-    firebase
-      .storage()
-      .ref("images/" + imgNumber + ".jpg")
-      .put(file)
-      .then(() => {
-        console.log("subido");
-        imgNumber++;
-        console.log(imgNumber);
-        db.collection("global").doc("itemsTotal").update({
-          cont: imgNumber,
-        });
-      })
-      .catch((error) => {
-        console.log(error.message);
+  firebase
+    .storage()
+    .ref("images/" + imgNumber + ".jpg")
+    .put(file)
+    .then(() => {
+      imgNumber++;
+      console.log(imgNumber);
+      db.collection("global").doc("itemsTotal").update({
+        cont: imgNumber,
       });
-  }, 1000);
-  setTimeout(function () {
-    location.reload();
-  }, 3500);
+    })
+    .catch((error) => {
+      console.log(error.message);
+    });
 });
 
 /*FUNCTIONS*/
@@ -811,7 +1568,6 @@ const loadDB = () => {
     if (doc.exists) {
       let result = doc.data();
       totalItems = result.cont;
-      console.log(totalItems);
     } else {
     }
   });
@@ -836,6 +1592,30 @@ const loadDB = () => {
                               <span class='proxAlert'> PROXIMAMENTE </span>
                               </article>`;
         }
+        callPromise.then(
+          setTimeout(() => {
+            /*OPENS SELECTED ITEM MODAL*/
+            let cardImg = document.getElementsByClassName("cardImg");
+            async function firstFunction(data, el) {
+              firebase
+                .storage()
+                .ref(`images/${data}.jpg`)
+                .getDownloadURL()
+                .then((imgUrl) => {
+                  el.src = imgUrl;
+                });
+              return;
+            }
+            async function secondFunction(cardImg) {
+              for (el of cardImg) {
+                let parent = el.parentNode;
+                let data = parent.getAttribute("data-cont");
+                await firstFunction(data, el);
+              }
+            }
+            secondFunction(cardImg);
+          }, 600)
+        );
       });
     });
 };
@@ -847,7 +1627,6 @@ const deleteCart = (docRef) => {
     })
     .then(() => {
       itemsCart.innerHTML = "<h1>NO HAY ITEMS</h1>";
-      cart.length = "";
     })
     .catch((error) => {
       // The document probably doesn't exist.
@@ -876,4 +1655,4 @@ const callPromise = new Promise((resolve, reject) => {
   }, 500);
 });
 
-emailjs.init("user_v6Q5mziNqkCnc3fmpewA1");
+emailjs.init("user_zHfLX4fnyJ0iDwHcZZC7y");

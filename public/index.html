@@ -12,7 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="styles/style.css">
-    <script src="path/from/html/page/to/jquery.min.js"></script>
 </head>
 
 <body>
@@ -61,7 +60,7 @@
             </div>
         </nav>
         <div class="header--main">
-            <h2 class="header--main__title">Bienvenido a la tienda Olivia</h2>
+            <h2 class="header--main__title">Bienvenido a tienda Olivia</h2>
         </div>
     </header>
     <main class="main" id="main">
@@ -71,9 +70,34 @@
             <div class="main--filters__interactive">
                 <ul class="filtersTotal">
                     <li id='filtersRemera'>Remeras</li>
+                    <ul id="moreRemeras">
+                        <li id="filtersMusculosas">Musculosas</li>
+                        <li id="filtersMangaCorta">Mangas Corta</li>
+                        <li id="filtersMangaLarga">Mangas Larga</li>
+                    </ul>
+                    <li id="filtersRemerones">Remerones</li>
+                    <li id="filtersBlusasCamisas">Blusas y camisas</li>
+                    <li id="filtersKimonos">Kimonos</li>
+                    <li id="filtersPolleras">Polleras</li>
+                    <li id="filtersVestidos">Vestidos</li>                    
+                </ul>
+                <ul class="filtersTotal">
                     <li id='filtersPantalones'>Pantalones</li>
-                    <li id='filtersBuzos'>Buzos</li>
-                    <li id='filtersAccesorios'>Accesorios</li>
+                    <ul id="morePantalones">
+                        <li id="filtersJeans">Jeans</li>
+                        <li id="filtersBengalina">Bengalina</li>
+                        <li id="filtersLino">Lino</li>
+                        <li id="filtersEngomado">Engomado</li>
+                    </ul>
+                    <li id="filtersShorts">Shorts</li>
+                    <li id="filtersSweaters">Sweaters</li>
+                    <li id="filtersBlazers">Blazers</li>
+                    <li id="filtersAccesorios">Accesorios</li>
+                    <ul id="moreAccesorios">
+                        <li id="filtersCartBill">Carteras y billereteras</li>
+                        <li id="filtersPañuelos">Pañuelos</li>
+                        <li id="filtersRelojes">Relojes</li>
+                    </ul>    
                 </ul>
             </div>
         </div>
@@ -101,9 +125,15 @@
                     <option value="remera">Remera</option>
                     <option value="pantalon">Pantalon</option>
                     <option value="accesorio">Accesorio</option>
-                    <option value="buzo">Buzo</option>
+                    <option value="remeron">Remerones</option>
+                    <option value="blusacamisa">Blusas y camisas</option>
+                    <option value="kimono">Kimonos</option>
+                    <option value="pollera">Polleras</option>
+                    <option value="vestido">Vestidos</option>
+                    <option value="short">Shorts</option>
+                    <option value="sweater">Sweaters</option>
+                    <option value="blazer">Blazers</option>
                 </select>
-
             </div>
             <div class="uploadSpace">
                 <label for="uploadDesc">Descripcion</label><input type="text" name="description"
@@ -131,7 +161,27 @@
                 <label for="uploadProx">Proximamente?</label>
                 <input type="checkbox" name="proximamente" id="uploadProx">
             </div>
+            <div id="moreFiltersSpace">
+                <h4>Ingrese una subcategoria para el producto</h2>
+                <select name="moreFiltersRemera" id="moreFiltersRemera">
+                    <option value="musculosa">Musculosas</option>
+                    <option value="mangacorta">Manga Corta</option>
+                    <option value="mangalarga">Manga Larga</option>
+                </select>
+                <select name="moreFiltersPantalones" id="moreFiltersPantalones">
+                    <option value="jean">Jeans</option>
+                    <option value="bengalina">Bengalina</option>
+                    <option value="lino">Lino</option>
+                    <option value="engomado">Engomado</option>
+                </select>
+                <select name="moreFiltersAccesorios" id="moreFiltersAccesorios">
+                    <option value="cartbill">Carteras y billeteras</option>
+                    <option value="pañuelo">Pañuelos</option>
+                    <option value="reloj">Relojes</option>
+                </select>
+            </div>
             <input type="button" value="Publicar producto" id="uploadItem">
+            <input type="button" value='Confirmar' id="uploadConfirm">
         </div>
     </section>
     <section class="about">
@@ -229,15 +279,13 @@
     <footer class="footer">
 
         <div class="footer--info">
-            <p>Nos pueden encontrar en:</p>
-            <p><i class="fas fa-search-location"></i>Segurola y Habana 4310</p>
-            <p><i class="far fa-clock"></i>Lunes a Viernes de 9 a las 18hs</p>
+            <p><i class="far fa-clock"></i>Atención de lunes a sábado.  De 8 a 11:30 y de 16 a 19:30</p>
         </div>
         <div class="footer--links">
             <ul>
-                <li><a href="#"><i class="fab fa-facebook-f"></i>Facebook</a></li>
-                <li><a href="#"><i class="fab fa-instagram"></i>Instagram</a></li>
-                <li><a href="#"><i class="fab fa-whatsapp"></i>12345678</a></li>
+                <li><a href="https://www.facebook.com/Oliviaboutique_sp-105845958207695/" target="_blank"><i class="fab fa-facebook-f"></i>Facebook</a></li>
+                <li><a href="https://www.instagram.com/oliviaboutique_sp/?hl=es" target="_blank"><i class="fab fa-instagram"></i>Instagram</a></li>
+                <li><a href="https://wa.me/3751345095" target="_blank"><i class="fab fa-whatsapp"></i>3751-345095</a></li>
             </ul>
         </div>
     </footer>

@@ -108,11 +108,24 @@ body {
 
     ul {
       list-style: none;
-      margin-top: 5rem;
+      width: 50%;
     }
 
     li {
-      margin: 1rem 0rem;
+      margin-top: 0.8rem;
+    }
+
+    .filtersTotal {
+      margin-top: 5rem;
+      #moreRemeras,
+      #morePantalones,
+      #moreAccesorios {
+        margin: 0;
+        margin-left: 1rem;
+        display: none;
+        font-weight: 700;
+        width: fit-content;
+      }
     }
 
     i {
@@ -307,7 +320,8 @@ body {
   align-items: flex-end;
   &--modal {
     width: 100%;
-    height: 75%;
+    height: 90%;
+    padding-bottom: 35px;
     background-color: var(--main-white-color);
     border-radius: 1rem 1rem 0rem 0rem;
     display: flex;
@@ -322,6 +336,22 @@ body {
       justify-content: space-evenly;
       width: 100%;
       height: 5rem;
+    }
+    #moreFiltersSpace {
+      height: 70%;
+      width: 100%;
+      display: none;
+      align-items: center;
+      justify-content: space-evenly;
+      flex-direction: column;
+      h4 {
+        width: 70%;
+      }
+      #moreFiltersAccesorios,
+      #moreFiltersRemera,
+      #moreFiltersPantalones {
+        display: none;
+      }
     }
     #uploadTitle,
     #uploadPrice,
@@ -364,7 +394,8 @@ body {
         color: var(--main-white-color);
       }
     }
-    #uploadItem {
+    #uploadItem,
+    #uploadConfirm {
       width: 50%;
       background: none;
       border: none;
@@ -379,6 +410,9 @@ body {
         color: var(--main-white-color);
         border: 2px solid var(--main-text-color);
       }
+    }
+    #uploadConfirm {
+      display: none;
     }
     .selectedSizes {
       width: 70%;
@@ -907,9 +941,18 @@ body {
       }
       &__interactive {
         display: none;
+        align-items: flex-start;
+        justify-content: space-between;
+        flex-direction: row;
         opacity: 0;
         transition: 0.5s;
         height: fit-content;
+        width: 100%;
+        .filtersTotal {
+          height: 100%;
+          margin-top: 1rem;
+          margin-right: 0rem;
+        }
       }
     }
     &--items {
